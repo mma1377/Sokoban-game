@@ -41,9 +41,3 @@ class SOKOBAN:
     
     def test2(self):
         print("Do something")
-
-def main():
-    var1 = SOKOBAN("C:/Users/InVaderrr/Documents/repos/Sokoban-game/sokoban-python/Soko1.txt")
-    print(var1.test())
-
-main()
