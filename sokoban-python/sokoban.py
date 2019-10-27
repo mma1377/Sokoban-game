@@ -38,6 +38,9 @@ class SOKOBAN:
     
     def test(self):
         return self.spot
+    
+    def test2(self):
+        print("Do something")
 
 def main():
     var1 = SOKOBAN("C:/Users/InVaderrr/Documents/repos/Sokoban-game/sokoban-python/Soko1.txt")
