@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronPython.Hosting;
+using IronPython;
 
 namespace Sokoban_game
 {
@@ -54,12 +55,11 @@ namespace Sokoban_game
 
         private void processBtn_click(object sender, EventArgs e)
         {
-            InitializeComponent();
             var engine = Python.CreateEngine();
             dynamic py = engine.ExecuteFile(System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\sokoban-python\\sokoban.py");
             SOKOBAN = py.SOKOBAN(inputFileDirectory);
-            double res;
-            res = SOKOBAN.add(2, 5);
+            IronPython.Runtime.PythonTuple res = SOKOBAN.test();
+            MessageBox.Show(res.ToString());
         }
 
         private void parse_problem_data_str_into_board(string problemDataStr)

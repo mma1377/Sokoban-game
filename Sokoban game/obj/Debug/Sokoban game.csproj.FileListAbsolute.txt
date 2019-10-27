@@ -35,3 +35,5 @@ D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debu
 D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.csproj.CopyComplete
 D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.exe
 D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.pdb
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\System.ValueTuple.dll
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\System.ValueTuple.xml
