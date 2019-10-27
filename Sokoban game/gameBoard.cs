@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IronPython.Hosting;
 
 namespace Sokoban_game
 {
@@ -17,6 +18,7 @@ namespace Sokoban_game
         PictureBox[,] sprites;
         MenuForm menuForm;
         string inputFileDirectory;
+        dynamic SOKOBAN;
 
         public Vector2 GameSize
         {
@@ -37,6 +39,27 @@ namespace Sokoban_game
         {
             string input = System.IO.File.ReadAllText(inputFileDirectory);
             parse_problem_data_str_into_board(input);
+            var processBtn = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            processBtn.Location = new System.Drawing.Point(8, 32 * GameSize.y + 8);
+            processBtn.Name = "processBtn";
+            processBtn.Size = new System.Drawing.Size(64, 24);
+            processBtn.TabIndex = 0;
+            processBtn.Text = "Process";
+            processBtn.UseVisualStyleBackColor = true;
+            processBtn.Click += new System.EventHandler(processBtn_click);
+            this.ResumeLayout();
+            this.Controls.Add(processBtn);
+        }
+
+        private void processBtn_click(object sender, EventArgs e)
+        {
+            InitializeComponent();
+            var engine = Python.CreateEngine();
+            dynamic py = engine.ExecuteFile(System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\sokoban-python\\sokoban.py");
+            SOKOBAN = py.SOKOBAN(inputFileDirectory);
+            double res;
+            res = SOKOBAN.add(2, 5);
         }
 
         private void parse_problem_data_str_into_board(string problemDataStr)
@@ -48,12 +71,14 @@ namespace Sokoban_game
             if (!validInputSize)
             {
                 MessageBox.Show("2 first elements in input demonstrate game size!\nPlease check that they are entered correctly.", "Invalid Input");
+                this.Close();
                 return;
             }
             gameSize = new Vector2(sizeX, sizeY);
             if (problemDataArray.Length - 2 < sizeY)
             {
                 MessageBox.Show("Not enough rows are entered!", "Invalid Input");
+                this.Close();
                 return;
             }
             for (int i = 2; i < problemDataArray.Length; i++)
@@ -61,6 +86,7 @@ namespace Sokoban_game
                 if (problemDataArray[i].Length < sizeX)
                 {
                     MessageBox.Show("Not enough columns are entered in row " + (i - 1).ToString() + "!", "Invalid Input");
+                    this.Close();
                     return;
                 }
             }
@@ -81,7 +107,7 @@ namespace Sokoban_game
                         sprites[j, i].Image = global::Sokoban_game.Properties.Resources.yoshi_32_dock;
                 }
             }
-            ClientSize = new System.Drawing.Size(GameSize.x * 32, GameSize.y * 32);
+            ClientSize = new System.Drawing.Size(GameSize.x * 32, GameSize.y * 32 + 40);
             ResumeLayout();
         }
 
@@ -132,6 +158,13 @@ namespace Sokoban_game
         private void boardForm_Closed(object sender, FormClosedEventArgs e)
         {
             menuForm.Show();
+        }
+
+        private void swap_sprites(Vector2 index1, Vector2 index2)
+        {
+            Image temp = sprites[index1.x, index1.y].Image;
+            sprites[index1.x, index1.y].Image = sprites[index2.x, index2.y].Image;
+            sprites[index2.x, index2.y].Image = temp;
         }
     }
 }

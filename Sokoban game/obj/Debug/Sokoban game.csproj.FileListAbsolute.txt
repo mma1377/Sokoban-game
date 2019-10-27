@@ -9,3 +9,29 @@ D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban game\obj\Debug\Sokoban gam
 D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban game\obj\Debug\Sokoban game.exe
 D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban game\obj\Debug\Sokoban game.pdb
 D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban game\obj\Debug\Sokoban_game.MenuForm.resources
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\Sokoban game.exe.config
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\Sokoban game.exe
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\Sokoban game.pdb
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\IronPython.dll
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\IronPython.Modules.dll
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\IronPython.SQLite.dll
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\IronPython.Wpf.dll
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Dynamic.dll
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Scripting.dll
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Scripting.Metadata.dll
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\IronPython.xml
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\IronPython.Modules.xml
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\IronPython.SQLite.xml
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\IronPython.Wpf.xml
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Dynamic.xml
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Scripting.xml
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Scripting.Metadata.xml
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.csprojAssemblyReference.cache
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban_game.MenuForm.resources
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban_game.gameBoard.resources
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban_game.Properties.Resources.resources
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.csproj.GenerateResource.cache
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.csproj.CoreCompileInputs.cache
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.csproj.CopyComplete
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.exe
+D:\EducationProjects\7-Autumn 98\Sokoban game\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.pdb
