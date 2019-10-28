@@ -57,9 +57,9 @@ namespace Sokoban_game
 
         private void processBtn_click(object sender, EventArgs e)
         {
-            SokobanSolver sokobanSolver = new SokobanSolver();
+            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
 
-            MessageBox.Show(sokobanSolver.test().ToString());
+            //MessageBox.Show(sokobanSolver.test().ToString());
             //MessageBox.Show("test");
             //\sokoban-cpp\Sokoban\Release
             //var engine = Python.CreateEngine();

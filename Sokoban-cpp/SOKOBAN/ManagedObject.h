@@ -1,5 +1,7 @@
 #pragma once
 
+using namespace System;
+
 namespace SOKOBANWrapper {
 	template<class T>
 	public ref class ManagedObject

@@ -140,6 +140,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="sokobanConversion.h" />
     <ClInclude Include="ManagedObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
