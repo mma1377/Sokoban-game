@@ -1,0 +1,25 @@
+ImageRuntimeVersion: v4.0.30319
+Assembly SOKOBAN, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class SOKOBANWrapper.ManagedObject<sokobanCore::SOKOBAN>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(sokobanCore.SOKOBAN*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class SOKOBAN.SokobanSolver: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :SOKOBANWrapper.ManagedObject<sokobanCore::SOKOBAN>
+    Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    test2(): PrivateScope, Public, HideBySig
+    test(): PrivateScope, Public, HideBySig
+    test3(): PrivateScope, Public, Static, HideBySig

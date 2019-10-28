@@ -1,0 +1,10 @@
+﻿  pch.cpp
+  AssemblyInfo.cpp
+  ManagedObject.cpp
+  SOKOBAN.cpp
+  Generating Code...
+  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
+  sokobanCore.lib(sokobanCore.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+  Generating code
+  Finished generating code
+  SOKOBAN.vcxproj -> D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\x64\Release\SOKOBAN.dll

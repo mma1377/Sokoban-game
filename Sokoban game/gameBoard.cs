@@ -10,16 +10,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronPython.Hosting;
 using IronPython;
+using SOKOBAN;
 
 namespace Sokoban_game
 {
+
     public partial class gameBoard : Form
     {
         private Vector2 gameSize;
         PictureBox[,] sprites;
         MenuForm menuForm;
         string inputFileDirectory;
-        dynamic SOKOBAN;
+        //dynamic SOKOBAN;
 
         public Vector2 GameSize
         {
@@ -55,11 +57,32 @@ namespace Sokoban_game
 
         private void processBtn_click(object sender, EventArgs e)
         {
-            var engine = Python.CreateEngine();
-            dynamic py = engine.ExecuteFile(System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\sokoban-python\\sokoban.py");
-            SOKOBAN = py.SOKOBAN(inputFileDirectory);
-            IronPython.Runtime.PythonTuple res = SOKOBAN.test();
-            MessageBox.Show(res.ToString());
+            SokobanSolver sokobanSolver = new SokobanSolver();
+
+            MessageBox.Show(sokobanSolver.test().ToString());
+            //MessageBox.Show("test");
+            //\sokoban-cpp\Sokoban\Release
+            //var engine = Python.CreateEngine();
+            //dynamic py = engine.ExecuteFile(System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\sokoban-python\\sokoban.py");
+            //SOKOBAN = py.SOKOBAN(inputFileDirectory);
+            //List<IronPython.Runtime.PythonTuple> res = SOKOBAN.test();
+            //for(int i = 0; i < res.Count; i++)
+            //{
+            //    var agentPos = ((IronPython.Runtime.PythonTuple)res[i].__getslice__(0, 0));
+            //    var boxPos = ((IronPython.Runtime.PythonTuple)res[i].__getslice__(1, 1));
+            //    MessageBox.Show(((int)agentPos.__getslice__(0, 0)).ToString());
+            //    //Timer timer1 = new Timer
+            //    //{
+            //    //    Interval = 1000
+            //    //};
+            //    //timer1.Enabled = true;
+            //    //timer1.Tick += new System.EventHandler(OnTimerEvent);
+            //}
+        }
+
+        private void OnTimerEvent(object sender, EventArgs e)
+        {
+            //listBox1.Items.Add(DateTime.Now.ToLongTimeString() + "," + DateTime.Now.ToLongDateString());
         }
 
         private void parse_problem_data_str_into_board(string problemDataStr)
