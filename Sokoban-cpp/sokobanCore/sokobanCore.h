@@ -42,6 +42,7 @@ struct STATE
     {
         return !(*this == other);
     }
+	STATE& operator=(const STATE& other) = default;
 };
 
 

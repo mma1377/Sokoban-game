@@ -28,3 +28,32 @@ D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban game\obj\Debug
 D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.csproj.CopyComplete
 D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.exe
 D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.pdb
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\Sokoban game.exe.config
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\Sokoban game.exe
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\Sokoban game.pdb
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\IronPython.dll
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\IronPython.Modules.dll
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\IronPython.SQLite.dll
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\IronPython.Wpf.dll
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Scripting.dll
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Scripting.Metadata.dll
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\SOKOBAN.dll
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\System.ValueTuple.dll
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\SOKOBAN.pdb
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\IronPython.xml
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\IronPython.Modules.xml
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\IronPython.SQLite.xml
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\IronPython.Wpf.xml
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Dynamic.xml
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Scripting.xml
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\Microsoft.Scripting.Metadata.xml
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\bin\Debug\System.ValueTuple.xml
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.csprojAssemblyReference.cache
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban_game.MenuForm.resources
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban_game.gameBoard.resources
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban_game.Properties.Resources.resources
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.csproj.GenerateResource.cache
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.csproj.CopyComplete
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.exe
+C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.pdb
