@@ -1,5 +1,4 @@
 ﻿using Sokoban_game.Properties;
-using Sokoban_game.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -136,7 +135,7 @@ namespace Sokoban_game
         private void processBtn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = "RRRRRDRULUR".ToCharArray();//= sokobanSolver.BFS().ToCharArray();
+            char[] path = sokobanSolver.BFS_Parallel().ToCharArray();
             //char[] path = "RR".ToCharArray();//= sokobanSolver.BFS().ToCharArray();
             var task = Task.Run(async () => await showPath(path));
             //MessageBox.Show(sokobanSolver.test().ToString());

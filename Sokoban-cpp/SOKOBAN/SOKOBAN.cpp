@@ -31,14 +31,18 @@ namespace SOKOBAN {
 
 	String^ SokobanSolver::BFS()
 	{
-		throw gcnew System::NotImplementedException();
-		// TODO: insert return statement here
+		std::cout << "Now lest do some BFS...\n";
+		STATE bfs_res = m_Instance->bfs();
+		std::cout << "result " << bfs_res.player.first << ' ' << bfs_res.player.second << '\t' << bfs_res.box.first << ' ' << bfs_res.box.second << '\n';
+		return sokobanConversion::char_array_to_string(bfs_res.path.c_str());
 	}
 
 	String^ SokobanSolver::BFS_Parallel()
 	{
-		throw gcnew System::NotImplementedException();
-		// TODO: insert return statement here
+		std::cout << "Now lest do some BFS...\n";
+		STATE bfs_res = m_Instance->bfs_omp();
+		std::cout << "result " << bfs_res.player.first << ' ' << bfs_res.player.second << '\t' << bfs_res.box.first << ' ' << bfs_res.box.second << '\n';
+		return sokobanConversion::char_array_to_string(bfs_res.path.c_str());
 	}
 
 	String^ SokobanSolver::DFS()

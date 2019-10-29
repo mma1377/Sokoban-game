@@ -1,6 +1,6 @@
 ﻿  sokobanCore.cpp
-C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(294,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(295,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(367): warning C4715: 'sokobanCore::SOKOBAN::dfs': not all control paths return a value
-C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(395): warning C4715: 'sokobanCore::SOKOBAN::dfs': not all control paths return a value
-  sokobanCore.vcxproj -> C:\Users\InVaderrr\Documents\repos\Sokoban-game\Debug\sokobanCore.lib
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(293): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(294): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(366): warning C4715: 'sokobanCore::SOKOBAN::dfs': not all control paths return a value
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(394): warning C4715: 'sokobanCore::SOKOBAN::dfs': not all control paths return a value
+  sokobanCore.vcxproj -> D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Debug\sokobanCore.lib

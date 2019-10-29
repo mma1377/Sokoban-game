@@ -42,7 +42,13 @@ struct STATE
     {
         return !(*this == other);
     }
-	STATE& operator=(const STATE& other) = default;
+	STATE& operator=(const STATE& other)
+	{
+		this->player = other.player;
+		this->box = other.box;
+		this->path = other.path;
+		return *this;
+	}
 };
 
 

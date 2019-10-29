@@ -199,7 +199,6 @@ namespace sokobanCore {
 			if (is_goal(state))
 			{
 				std::cout << "COUNT: " << count << '\n';
-				delete visited_states;
 				return state;
 			}
 			std::vector<STATE>* successors = successor(state);
