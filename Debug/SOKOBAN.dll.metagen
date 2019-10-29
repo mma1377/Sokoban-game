@@ -18,3 +18,6 @@ Class SOKOBANWrapper.ManagedObject<sokobanCore::SOKOBAN>: AutoLayout, AnsiClass,
 Class SOKOBAN.SokobanSolver: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :SOKOBANWrapper.ManagedObject<sokobanCore::SOKOBAN>
     Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    BFSTest(): PrivateScope, Public, HideBySig
+    BFS_OMPTest(): PrivateScope, Public, HideBySig

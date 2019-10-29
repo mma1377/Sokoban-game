@@ -3,7 +3,7 @@
 using namespace System;
 
 namespace SOKOBANWrapper {
-	template<class T>
+	template<typename T>
 	public ref class ManagedObject
 	{
 	protected:

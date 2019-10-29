@@ -1,5 +1,7 @@
 #include "sokobanCore.h"
 #include <iostream>
+#include <omp.h>
+//#define _SECURE_SCL 0
 
 namespace sokobanCore {
 	SOKOBAN::SOKOBAN(const char* input_file)
@@ -152,6 +154,121 @@ namespace sokobanCore {
 		return next_states;
 	}
 
+	STATE SOKOBAN::bfs_omp()
+	{
+		STATE initial_state = std::make_pair(player, box);
+		std::queue<STATE> queue;
+		queue.push(initial_state);
+
+		// long long int history_size = this->n * this->n * this->m * this->m;
+		// STATE* visited_states;
+		// visited_states = new STATE[history_size];
+		// long long int i = 0;
+		// long long int cap = 0;
+		int indx = 0;
+		
+		//std::vector<STATE> history;
+		int history_size = 50000;
+		STATE defaultState = std::make_pair(std::make_pair(-1, -1), std::make_pair(-1, -1));
+		//history.resize(history_size, defaultState);
+
+		STATE* history = new STATE[history_size];
+		for (int i = 0; i < history_size; i++) {
+			history[i] = defaultState;
+		}
+
+		int count = 0;
+		while (!queue.empty())
+		{
+			count++;
+			STATE state = queue.front();
+			//history.insert(state);
+			history[indx++] = state;
+			// visited_states[i++] = state;
+			// i = i % history_size;
+			indx = indx % history_size;
+			// cap = std::min(++cap, history_size);
+			queue.pop();
+			if (is_goal(state))
+			{
+				std::cout << "COUNT: " << count << '\n';
+				//std::cout << "Vector size: " << history.size() << '\n';
+				return state;
+			}
+			std::vector<STATE>* successors = successor(state);
+			omp_set_dynamic(0);
+			omp_set_num_threads(omp_get_max_threads());
+			
+			for (auto s = successors->begin(); s != successors->end(); s++)
+			{
+				bool flag = true;
+				bool foundInHistoryFlag = false;
+#pragma omp parallel
+				{
+					int thread_num = omp_get_thread_num();
+					int number_of_threads = omp_get_num_threads();
+					//std::cout << "thread = " << thread_num << "\n";
+					
+					/*auto first = history.begin() + std::floor((float)history.size() * ((float)thread_num / (float)number_of_threads));
+					auto last = history.begin() + std::floor((float)history.size() * ((float)(thread_num + 1) / (float)number_of_threads));*/
+					
+					int first = std::floor((float)history_size * ((float)thread_num / (float)number_of_threads));
+					int last = std::floor((float)history_size * ((float)(thread_num + 1) / (float)number_of_threads));
+
+					//std::string h = std::hash<STATE>(*s);
+//#pragma omp barrier
+//					{
+//					std::cout << thread_num << " " << last - first << "\n";
+//					}
+
+					/*if (std::search(first, last, s, s + 1, [](STATE a, STATE b) -> bool {return a == b; }) != last) {
+						foundInHistoryFlag = true;
+					}*/
+
+					/*if (std::find_if(first, last, [s, defaultState, foundInHistoryFlag](STATE a) -> bool {return a == *s || a == defaultState || foundInHistoryFlag; }) != last) {
+						foundInHistoryFlag = true;
+					}*/
+
+					/*if (std::find(first, last, *s) != last) {
+						foundInHistoryFlag = true;
+					}*/
+
+					/*if (std::find(first, last, *s) != last) {
+						foundInHistoryFlag = true;
+					}*/
+
+					for (int i = first; i != last; i++) {
+						if (foundInHistoryFlag || (history[i] == defaultState))
+							break;
+						if (history[i] == *s)
+							foundInHistoryFlag = true;
+					}
+
+					/*for (auto i = first; i != last; i++) {
+						if (foundInHistoryFlag || *i == defaultState)
+							break;
+						if (*i == *s)
+							foundInHistoryFlag = true;
+					}*/
+#pragma omp barrier
+					{
+					}
+				}
+//#pragma omp single
+				if (foundInHistoryFlag)
+					continue;
+				queue.push(*s);
+
+			}
+			delete successors;
+			//std::cout << count << '\n';
+			if (count % 1000 == 0)
+				std::cout << count << '\n';
+
+		}
+		return std::make_pair(std::make_pair(-1, -1), std::make_pair(-1, -1));
+	}
+
 	STATE SOKOBAN::bfs()
 	{
 		STATE initial_state = std::make_pair(player, box);
@@ -197,7 +314,7 @@ namespace sokobanCore {
 				}
 			}
 			delete successors;
-			if (count % 5000 == 0)
+			if (count % 1000 == 0)
 				std::cout << count << '\n';
 
 		}

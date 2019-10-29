@@ -10,5 +10,7 @@ namespace SOKOBAN {
 	{
 	public:
 		SokobanSolver(String^ inputDirectory);
+		void BFSTest();
+		void BFS_OMPTest();
 	};
 }
