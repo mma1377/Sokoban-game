@@ -102,7 +102,7 @@ namespace sokobanCore {
 		// Horizontal movements
 		char h[2] = {'L', 'R'};
 		// Vertical movements
-		char v[2] = {'D', 'U'};
+		char v[2] = {'U', 'D'};
 		for (short i = -1; i < 2; i += 2)
 		{
 			// Move player one step to the left/right
