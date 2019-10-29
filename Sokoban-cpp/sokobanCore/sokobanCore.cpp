@@ -220,7 +220,7 @@ namespace sokobanCore {
 				}
 			}
 			delete successors;
-			if (count % 10000 == 0) 
+			if (count % 1000 == 0) 
 				std::cout << count << '\n';
 			
 		}
@@ -366,7 +366,7 @@ namespace sokobanCore {
 		delete successors;
 	}
 
-	STATE SOKOBAN::dfs(STATE state, int depth = -1, STATE* visited_states, int& history_size, int& i, int& cap)
+	STATE SOKOBAN::dfs(STATE state, int depth, STATE* visited_states, int& history_size, int& i, int& cap)
 	{
 		if (this->is_goal(state))
 		{

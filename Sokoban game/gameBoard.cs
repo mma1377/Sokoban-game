@@ -1,4 +1,5 @@
 ﻿using Sokoban_game.Properties;
+using Sokoban_game.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,7 +59,8 @@ namespace Sokoban_game
         private void processBtn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
-            sokobanSolver.BFS_OMPTest();
+            //sokobanSolver.BFS_OMPTest();
+            sokobanSolver.BFSTest();
             //MessageBox.Show(sokobanSolver.test().ToString());
             //MessageBox.Show("test");
             //\sokoban-cpp\Sokoban\Release

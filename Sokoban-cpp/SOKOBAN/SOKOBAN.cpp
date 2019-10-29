@@ -19,14 +19,14 @@ namespace SOKOBAN {
 	{
 		std::cout << "Now lest do some BFS...\n";
 		STATE bfs_res = m_Instance->bfs();
-		std::cout << bfs_res.first.first << ' ' << bfs_res.first.second << '\t' << bfs_res.second.first << ' ' << bfs_res.second.second << '\n';
+		std::cout << bfs_res.player.first << ' ' << bfs_res.player.second << '\t' << bfs_res.box.first << ' ' << bfs_res.box.second << '\n';
 	}
 	
 	void SokobanSolver::BFS_OMPTest()
 	{
 		std::cout << "Now lest do some BFS...\n";
 		STATE bfs_res = m_Instance->bfs_omp();
-		std::cout << "result "<< bfs_res.first.first << ' ' << bfs_res.first.second << '\t' << bfs_res.second.first << ' ' << bfs_res.second.second << '\n';
+		std::cout << "result "<< bfs_res.player.first << ' ' << bfs_res.player.second << '\t' << bfs_res.box.first << ' ' << bfs_res.box.second << '\n';
 	}
 
 	/*sTest::sTest(std::string inputDirectory): ManagedObject(new sokobanCore::SOKOBAN(inputDirectory))
