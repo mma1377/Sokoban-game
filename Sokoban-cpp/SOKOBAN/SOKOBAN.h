@@ -12,5 +12,9 @@ namespace SOKOBAN {
 		SokobanSolver(String^ inputDirectory);
 		void BFSTest();
 		void BFS_OMPTest();
+		String^ BFS();
+		String^ BFS_Parallel();
+		String^ DFS();
+		String^ IDS();
 	};
 }

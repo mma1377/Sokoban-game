@@ -11,5 +11,9 @@ namespace SOKOBANWrapper {
 			const char* str = (const char*)(Marshal::StringToHGlobalAnsi(string)).ToPointer();
 			return str;
 		}
+		static String^ char_array_to_string(char* charArray) {
+			String^ str = Marshal::PtrToStringAnsi((IntPtr)(char*)charArray);
+			return str;
+		}
 	};
 }

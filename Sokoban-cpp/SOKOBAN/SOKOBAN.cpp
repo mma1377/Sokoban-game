@@ -29,6 +29,30 @@ namespace SOKOBAN {
 		std::cout << "result "<< bfs_res.first.first << ' ' << bfs_res.first.second << '\t' << bfs_res.second.first << ' ' << bfs_res.second.second << '\n';
 	}
 
+	String^ SokobanSolver::BFS()
+	{
+		throw gcnew System::NotImplementedException();
+		// TODO: insert return statement here
+	}
+
+	String^ SokobanSolver::BFS_Parallel()
+	{
+		throw gcnew System::NotImplementedException();
+		// TODO: insert return statement here
+	}
+
+	String^ SokobanSolver::DFS()
+	{
+		throw gcnew System::NotImplementedException();
+		// TODO: insert return statement here
+	}
+
+	String^ SokobanSolver::IDS()
+	{
+		throw gcnew System::NotImplementedException();
+		// TODO: insert return statement here
+	}
+
 	/*sTest::sTest(std::string inputDirectory): ManagedObject(new sokobanCore::SOKOBAN(inputDirectory))
 	{
 
