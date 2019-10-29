@@ -24,6 +24,7 @@ namespace Sokoban_game
         string inputFileDirectory;
         Vector2 playerPosition;
         List<Vector2> boxesLocations;
+        List<Vector2> spotsLocations;
         //dynamic SOKOBAN;
 
         public Vector2 GameSize
@@ -71,7 +72,7 @@ namespace Sokoban_game
             return false;
         }
 
-        private Task DoAsync(char x, int i)
+        private Task DoAsync(char x)
         {
             Task.Delay(300).Wait();
             switch (x)
@@ -128,7 +129,7 @@ namespace Sokoban_game
         {
             for (int i = 0; i < path.Length; i++)
             {
-                await DoAsync(path[i], i);
+                await DoAsync(path[i]);
             }
         }
 
@@ -194,6 +195,7 @@ namespace Sokoban_game
             }
             allocate_sprites();
             boxesLocations = new List<Vector2>();
+            spotsLocations = new List<Vector2>();
             for (int i = 0; i < GameSize.y; i++)
             {
                 for(int j = 0; j < GameSize.x; j++)
@@ -213,7 +215,10 @@ namespace Sokoban_game
                         playerPosition = new Vector2(j, i);
                     }
                     else if (problemDataArray[i + 2][j] == 'X')
+                    {
+                        spotsLocations.Add(new Vector2(j, i));
                         sprites[j, i].Image = global::Sokoban_game.Properties.Resources.yoshi_32_dock;
+                    }
                 }
             }
             ClientSize = new System.Drawing.Size(GameSize.x * 32, GameSize.y * 32 + 40);
@@ -239,7 +244,7 @@ namespace Sokoban_game
             }
         }
 
-        public class Vector2
+        public class Vector2: IEquatable<Vector2>
         {
             int _x;
             int _y;
@@ -266,6 +271,18 @@ namespace Sokoban_game
             {
                 return new Vector2(a.x + b.x, a.y + b.y);
             }
+            public static bool operator ==(Vector2 a, Vector2 b)
+            {
+                return a.x == b.x && a.y == b.y;
+            }
+            public static bool operator !=(Vector2 a, Vector2 b)
+            {
+                return !(a == b);
+            }
+            public bool Equals(Vector2 other)
+            {
+                return this == other;
+            }
         }
 
         private void boardForm_Closed(object sender, FormClosedEventArgs e)
@@ -275,6 +292,11 @@ namespace Sokoban_game
 
         private void swap_sprites(Vector2 index1, Vector2 index2)
         {
+            if (spotsLocations.Contains(index2))
+            {
+                sprites[index2.x, index2.y].Image = sprites[index2.x, index2.y].Image = global::Sokoban_game.Properties.Resources.yoshi_32_floor;
+                spotsLocations.Remove(index2);
+            }
             Image temp = sprites[index1.x, index1.y].Image;
             sprites[index1.x, index1.y].Image = sprites[index2.x, index2.y].Image;
             sprites[index2.x, index2.y].Image = temp;

@@ -4,3 +4,8 @@ D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCor
 D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(366): warning C4715: 'sokobanCore::SOKOBAN::dfs': not all control paths return a value
 D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(394): warning C4715: 'sokobanCore::SOKOBAN::dfs': not all control paths return a value
   sokobanCore.vcxproj -> D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Debug\sokobanCore.lib
+d:\educationprojects\7-autumn 98\sokobangame\sokoban-game\sokoban-cpp\sokobancore\sokobancore.cpp(157): warning C6385: Reading invalid data from 'v':  the readable size is '2' bytes, but 'max(*&_Ty=(short)0, *&_Ty, i)' bytes may be read.
+d:\educationprojects\7-autumn 98\sokobangame\sokoban-game\sokoban-cpp\sokobancore\sokobancore.cpp(129): warning C6385: Reading invalid data from 'h':  the readable size is '2' bytes, but 'max(*&_Ty=(short)0, *&_Ty, i)' bytes may be read.
+d:\educationprojects\7-autumn 98\sokobangame\sokoban-game\sokoban-cpp\sokobancore\sokobancore.cpp(227): warning C6278: 'visited_states' is allocated with array new [], but deleted with scalar delete.  Destructors will not be called.
+d:\educationprojects\7-autumn 98\sokobangame\sokoban-game\sokoban-cpp\sokobancore\sokobancore.cpp(284): warning C6993: Code analysis ignores OpenMP constructs; analyzing single-threaded code.
+d:\educationprojects\7-autumn 98\sokobangame\sokoban-game\sokoban-cpp\sokobancore\sokobancore.cpp(390): warning C26444: Avoid unnamed objects with custom construction and destruction (es.84).
