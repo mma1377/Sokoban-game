@@ -9,13 +9,12 @@ class SOKOBAN:
     def __init__(self, input_file):
 
         file = open(input_file, 'r')
-
         n, m = [eval(x) for x in file.readline().split()]
 
         self.game_map = []
         self.player = (-1, -1)
         self.box = (-1, -1)
-        self.spot = (-1, -1)
+        self.storage = (-1, -1)
 
         for row in range(n):
             tmp = []
@@ -32,57 +31,87 @@ class SOKOBAN:
                     self.box = (column, row)
                     tmp.append(1)
                 if line[column] == 'X':
-                    self.spot = (column, row)
+                    self.storage = (column, row)
                     tmp.append(1)
             self.game_map.append(tmp)
     
-    def is_goal(self):
-        if self.box == self.spot:
+    def is_goal(self, box):
+        # box is a tuple containing the box's coordinates
+        if box == self.storage:
             return True
         return False
 
-    def successor(self):
-        player_x = self.player[0]
-        player_y = self.player[1]
-        box_x = self.box[0]
-        box_y = self.box[1]
+    def successor(self, current_state):
+        current_plyr_x = current_state[0][0]
+        current_plyr_y = current_state[0][1]
+        current_box_x = current_state[1][0]
+        current_box_y = current_state[1][1]
 
         # Move the player and/or the box in either of the four directions available
         # Each state is a tuple of two tuples: (Player position (x, y), Box position (x, y))
         next_states = []
         for i in [-1, 1]:
             # Move along the X axis
-            next_plyr_x = player_x + i
-            next_plyr_y = player_y
+            next_plyr_x = current_plyr_x + i
+            next_plyr_y = current_plyr_y
 
             if self.game_map[next_plyr_y][next_plyr_x] == 1:
-                if (box_x == next_plyr_x and box_y == next_plyr_y):
-                    if self.game_map[box_y][box_x + i] == 1:
+                if (current_box_x == next_plyr_x and current_box_y == next_plyr_y):
+                    if self.game_map[current_box_y][current_box_x + i] == 1:
                         # Move is valid
-                        next_states.append(((next_plyr_x, next_plyr_y), (box_x + i, box_y)))
+                        next_states.append(((next_plyr_x, next_plyr_y), (current_box_x + i, current_box_y)))
                 else:
-                    next_states.append(((next_plyr_x, next_plyr_y), (box_x, box_y)))
+                    next_states.append(((next_plyr_x, next_plyr_y), (current_box_x, current_box_y)))
             
             # Move along the Y axis
-            next_plyr_x = player_x
-            next_plyr_y = player_y + i
+            next_plyr_x = current_plyr_x
+            next_plyr_y = current_plyr_y + i
 
             if self.game_map[next_plyr_y][next_plyr_x] == 1:
-                if (box_x == next_plyr_x and box_y == next_plyr_y):
-                    if self.game_map[box_y + i][box_x] == 1:
+                if (current_box_x == next_plyr_x and current_box_y == next_plyr_y):
+                    if self.game_map[current_box_y + i][current_box_x] == 1:
                         # Move is valid
-                        next_states.append(((next_plyr_x, next_plyr_y), (box_x, box_y + i)))
+                        next_states.append(((next_plyr_x, next_plyr_y), (current_box_x, current_box_y + i)))
                 else:
-                    next_states.append(((next_plyr_x, next_plyr_y), (box_x, box_y)))
-        
-        print("SUCCESSORS:")
-        for x in next_states:
-            print(x)
+                    next_states.append(((next_plyr_x, next_plyr_y), (current_box_x, current_box_y)))
+
         return next_states
 
     def test(self):
-        return self.spot
+        return self.storage
     
-    def current_state(self):
-        print("Player:", self.player)
-        print("Box:", self.box)
+    def initial_state(self):
+        return (self.player, self.box)
+    
+    def bfs(self):
+        init_state = self.initial_state()
+        queue = []
+        queue.insert(0, init_state)
+        while len(queue) != 0:
+            state = queue.pop()
+            if self.is_goal(state[1]):
+                return state
+            next_steps = self.successor(state)
+            for x in next_steps:
+                queue.insert(0, x)
+
+        # no goal was found
+        return ((-1, -1), (-1, -1))
+
+    def bfs_with_path(self):
+        init_state = self.initial_state()
+        queue = []
+        queue.insert(0, [init_state])
+        while len(queue) != 0:
+            path = queue.pop()
+            state = path[-1]
+            if self.is_goal(state[1]):
+                return path
+            next_steps = self.successor(state)
+            for x in next_steps:
+                new_path = list(path)
+                new_path.append(x)
+                queue.insert(0, new_path)
+
+        # no goal was found
+        return ((-1, -1), (-1, -1))
