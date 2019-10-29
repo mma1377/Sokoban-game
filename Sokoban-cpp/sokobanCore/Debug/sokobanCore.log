@@ -1,4 +1,4 @@
 ﻿  sokobanCore.cpp
-D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(215): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(216): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(219): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(220): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   sokobanCore.vcxproj -> D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Debug\sokobanCore.lib

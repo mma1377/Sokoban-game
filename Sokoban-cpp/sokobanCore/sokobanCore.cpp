@@ -166,7 +166,7 @@ namespace sokobanCore {
 		// long long int i = 0;
 		// long long int cap = 0;
 		int indx = 0;
-		
+		int top = 0;
 		//std::vector<STATE> history;
 		int history_size = 50000;
 		STATE defaultState = std::make_pair(std::make_pair(-1, -1), std::make_pair(-1, -1));
@@ -187,6 +187,9 @@ namespace sokobanCore {
 			// visited_states[i++] = state;
 			// i = i % history_size;
 			indx = indx % history_size;
+			top++;
+			if (top > history_size)
+				top = history_size;
 			// cap = std::min(++cap, history_size);
 			queue.pop();
 			if (is_goal(state))
@@ -197,6 +200,7 @@ namespace sokobanCore {
 			}
 			std::vector<STATE>* successors = successor(state);
 			omp_set_dynamic(0);
+			
 			omp_set_num_threads(omp_get_max_threads());
 			
 			for (auto s = successors->begin(); s != successors->end(); s++)
@@ -212,8 +216,8 @@ namespace sokobanCore {
 					/*auto first = history.begin() + std::floor((float)history.size() * ((float)thread_num / (float)number_of_threads));
 					auto last = history.begin() + std::floor((float)history.size() * ((float)(thread_num + 1) / (float)number_of_threads));*/
 					
-					int first = std::floor((float)history_size * ((float)thread_num / (float)number_of_threads));
-					int last = std::floor((float)history_size * ((float)(thread_num + 1) / (float)number_of_threads));
+					int first = std::floor((float)top * ((float)thread_num / (float)number_of_threads));
+					int last = std::floor((float)top * ((float)(thread_num + 1) / (float)number_of_threads));
 
 					//std::string h = std::hash<STATE>(*s);
 //#pragma omp barrier
@@ -233,16 +237,16 @@ namespace sokobanCore {
 						foundInHistoryFlag = true;
 					}*/
 
-					/*if (std::find(first, last, *s) != last) {
+					if (std::find(history + first, history + last, *s) != history + last) {
 						foundInHistoryFlag = true;
-					}*/
+					}
 
-					for (int i = first; i != last; i++) {
+					/*for (int i = first; i != last; i++) {
 						if (foundInHistoryFlag || (history[i] == defaultState))
 							break;
 						if (history[i] == *s)
 							foundInHistoryFlag = true;
-					}
+					}*/
 
 					/*for (auto i = first; i != last; i++) {
 						if (foundInHistoryFlag || *i == defaultState)
