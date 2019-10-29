@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using IronPython.Hosting;
 using IronPython;
 using SOKOBAN;
+using System.Threading;
 
 namespace Sokoban_game
 {
@@ -22,6 +23,8 @@ namespace Sokoban_game
         PictureBox[,] sprites;
         MenuForm menuForm;
         string inputFileDirectory;
+        Vector2 playerPosition;
+        List<Vector2> boxesLocations;
         //dynamic SOKOBAN;
 
         public Vector2 GameSize
@@ -56,11 +59,86 @@ namespace Sokoban_game
             this.Controls.Add(processBtn);
         }
 
+        private bool isBox(Vector2 position, ref int index)
+        {
+            for(int i = 0; i < boxesLocations.Count; i++)
+            {
+                if (boxesLocations[i].x == position.x && boxesLocations[i].y == position.y)
+                {
+                    index = i;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private Task DoAsync(char x, int i)
+        {
+            Task.Delay(300).Wait();
+            switch (x)
+            {
+                case 'U':
+                    Vector2 newPos = playerPosition + new Vector2(0, -1);
+                    int BoxIndx = 0;
+                    if (isBox(newPos, ref BoxIndx))
+                    {
+                        swap_sprites(newPos, newPos + new Vector2(0, -1));
+                        boxesLocations[BoxIndx] = newPos + new Vector2(0, -1);
+                    }
+                    swap_sprites(playerPosition, newPos);
+                    playerPosition = newPos;
+                    break;
+                case 'D':
+                    newPos = playerPosition + new Vector2(0, 1);
+                    BoxIndx = 0;
+                    if (isBox(newPos, ref BoxIndx))
+                    {
+                        swap_sprites(newPos, newPos + new Vector2(0, 1));
+                        boxesLocations[BoxIndx] = newPos + new Vector2(0, 1);
+                    }
+                    swap_sprites(playerPosition, newPos);
+                    playerPosition = newPos;
+                    break;
+                case 'L':
+                    newPos = playerPosition + new Vector2(-1, 0);
+                    BoxIndx = 0;
+                    if (isBox(newPos, ref BoxIndx))
+                    {
+                        swap_sprites(newPos, newPos + new Vector2(-1, 0));
+                        boxesLocations[BoxIndx] = newPos + new Vector2(-1, 0);
+                    }
+                    swap_sprites(playerPosition, newPos);
+                    playerPosition = newPos;
+                    break;
+                case 'R':
+                    newPos = playerPosition + new Vector2(1, 0);
+                    BoxIndx = 0;
+                    if (isBox(newPos, ref BoxIndx))
+                    {
+                        swap_sprites(newPos, newPos + new Vector2(1, 0));
+                        boxesLocations[BoxIndx] = newPos + new Vector2(1, 0);
+                    }
+                    swap_sprites(playerPosition, newPos);
+                    playerPosition = newPos;
+                    break;
+            }
+            return Task.CompletedTask;
+        }
+
+        private async Task showPath(char[] path)
+        {
+            for (int i = 0; i < path.Length; i++)
+            {
+                await DoAsync(path[i], i);
+            }
+        }
+
         private void processBtn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
-            //sokobanSolver.BFS_OMPTest();
-            sokobanSolver.BFSTest();
+            char[] path = "RRRRRDRULUR".ToCharArray();//= sokobanSolver.BFS().ToCharArray();
+            //char[] path = "RR".ToCharArray();//= sokobanSolver.BFS().ToCharArray();
+            var task = Task.Run(async () => await showPath(path));
             //MessageBox.Show(sokobanSolver.test().ToString());
             //MessageBox.Show("test");
             //\sokoban-cpp\Sokoban\Release
@@ -84,7 +162,7 @@ namespace Sokoban_game
 
         private void OnTimerEvent(object sender, EventArgs e)
         {
-            //listBox1.Items.Add(DateTime.Now.ToLongTimeString() + "," + DateTime.Now.ToLongDateString());
+            
         }
 
         private void parse_problem_data_str_into_board(string problemDataStr)
@@ -116,18 +194,25 @@ namespace Sokoban_game
                 }
             }
             allocate_sprites();
+            boxesLocations = new List<Vector2>();
             for (int i = 0; i < GameSize.y; i++)
             {
                 for(int j = 0; j < GameSize.x; j++)
                 {
-                    if(problemDataArray[i + 2][j] == '#')
-                        sprites[j,i].Image = global::Sokoban_game.Properties.Resources.yoshi_32_wall;
-                    else if(problemDataArray[i + 2][j] == '@')
+                    if (problemDataArray[i + 2][j] == '#')
+                        sprites[j, i].Image = global::Sokoban_game.Properties.Resources.yoshi_32_wall;
+                    else if (problemDataArray[i + 2][j] == '@')
+                    {
+                        boxesLocations.Add(new Vector2(j, i));
                         sprites[j, i].Image = global::Sokoban_game.Properties.Resources.yoshi_32_box;
+                    }
                     else if (problemDataArray[i + 2][j] == '.')
                         sprites[j, i].Image = global::Sokoban_game.Properties.Resources.yoshi_32_floor;
                     else if (problemDataArray[i + 2][j] == 'S')
+                    {
                         sprites[j, i].Image = global::Sokoban_game.Properties.Resources.yoshi_32_worker;
+                        playerPosition = new Vector2(j, i);
+                    }
                     else if (problemDataArray[i + 2][j] == 'X')
                         sprites[j, i].Image = global::Sokoban_game.Properties.Resources.yoshi_32_dock;
                 }
@@ -177,6 +262,10 @@ namespace Sokoban_game
             {
                 _x = x;
                 _y = y;
+            }
+            public static Vector2 operator +(Vector2 a, Vector2 b)
+            {
+                return new Vector2(a.x + b.x, a.y + b.y);
             }
         }
 

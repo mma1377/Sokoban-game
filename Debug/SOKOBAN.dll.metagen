@@ -21,3 +21,7 @@ Class SOKOBAN.SokobanSolver: AutoLayout, AnsiClass, Class, Public, BeforeFieldIn
   Methods:
     BFSTest(): PrivateScope, Public, HideBySig
     BFS_OMPTest(): PrivateScope, Public, HideBySig
+    BFS(): PrivateScope, Public, HideBySig
+    BFS_Parallel(): PrivateScope, Public, HideBySig
+    DFS(): PrivateScope, Public, HideBySig
+    IDS(): PrivateScope, Public, HideBySig
