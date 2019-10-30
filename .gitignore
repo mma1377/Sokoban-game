@@ -1,6 +1,9 @@
 sokoban-python/Soko4.txt
 .vscode/c_cpp_properties.json
 .vscode/settings.json
+/.vs/Sokoban game/v16/ipch/AutoPCH/cfce3009195988b0/SOKOBANCORE.ipch
+Browse.VC.db
+storage.ide-wal
 *.tlog
 *.xml
 *.cache
@@ -13,3 +16,13 @@ sokoban-python/Soko4.txt
 *.db
 *.suo
 *.log
+*.db
+*.VC.db
+*.opendb
+*.ipch
+*.ide-shm
+*.ide.wal
+*.db-shm
+*.db-wal
+.vs/Sokoban game/v16/Browse.VC.db
+*.ipch

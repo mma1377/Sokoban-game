@@ -163,68 +163,53 @@ namespace sokobanCore {
 			}
 		}
 
+		// EXPERIMENTAL: Shuffling the successors MAY improve DFS
+		//std::random_shuffle(next_states->begin(), next_states->end());
+
 		return next_states;
 	}
 
-	STATE SOKOBAN::bfs()
+	STATE SOKOBAN::bfs(const unsigned int& history_size, unsigned int& count)
 	{
 		STATE initial_state = this->initial_state();
 		std::queue<STATE> queue;
 		queue.push(initial_state);
-	// If a manual HISTORY SIZE is not set, make it the maximum number needed, which is
-	// the tartib of 2 in the number of ones
-	#ifndef HISTORY_SIZE
-	#define HISTORY_SIZE int(((this->ones) * (this->ones - 1)))
-	#endif
-		unsigned int history_size = HISTORY_SIZE;
+
 		STATE* visited_states;
 		visited_states = new STATE[history_size];
 		unsigned int i = 0;
 		unsigned int cap = 0;
-		std::vector<STATE> history;
-		//history.resize(HISTORY_SIZE);
 
-		std::cout << "HISTORY SIZE: " << history_size << '\n';
-		int count = 0;
+		STATE state;
 		while (!queue.empty())
 		{
 			count++;
-			STATE state = queue.front();
-			// history.insert(state);
-			// history[count % history_size] = state;
+			state = queue.front();
+			//std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\n';
+			//printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
 			visited_states[i++] = state;
 			i = i % history_size;
 			cap = std::min(++cap, history_size);
+
 			queue.pop();
 			if (is_goal(state))
 			{
-				std::cout << "COUNT: " << count << '\n';
+				delete[] visited_states;
 				return state;
 			}
 			std::vector<STATE>* successors = successor(state);
 			for (auto s = successors->begin(); s != successors->end(); s++)
 			{
-				bool flag = true;
-				// if (std::find(history.begin(), history.end(), *s) != history.end())
-				// {
-				//     continue;
-				// }
-				if (std::find(visited_states, visited_states + history_size, *s) != visited_states + history_size)
+				if (std::find(visited_states, visited_states + cap, *s) == visited_states + cap)
 				{
-					continue;
-				}
-				else
-				{
+					// Found an unvisited state
 					queue.push(*s);
 				}
 			}
-			delete successors;
-			if (count % 1000 == 0) 
-				std::cout << count << '\n';
-			
+			successors->clear();
 		}
 
-		delete visited_states;
+		delete[] visited_states;
 		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 	}
 
@@ -347,76 +332,65 @@ namespace sokobanCore {
 		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 	}
 
-	STATE SOKOBAN::dfs(STATE state, int depth = -1)
+	STATE SOKOBAN::dfs(int max_depth, const unsigned int& history_size, unsigned int& count)
 	{
-		if (this->is_goal(state))
+		STATE initial_state = this->initial_state();
+		std::stack<STATE> stack;
+		stack.push(initial_state);
+
+		STATE* visited_states;
+		visited_states = new STATE[history_size];
+		unsigned int i = 0;
+		unsigned int cap = 0;
+
+		STATE state;
+		while (!stack.empty())
 		{
-			return state;
-		}
-		if (depth == 0)
-		{
-			return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
-		}
-		std::vector<STATE>* successors = successor(state);
-		for (auto s = successors->begin(); s != successors->end(); s++)
-		{
-			return dfs(*s, depth - 1);
+			//state = queue.front();
+			state = stack.top();
+			stack.pop();
+			if (state.path.length() > max_depth)
+			{
+				continue;
+			}
+			count++;
+			//std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\t';
+			//printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
+			visited_states[i++] = state;
+			i = i % history_size;
+			cap = std::min(++cap, history_size);
+
+			if (is_goal(state))
+			{
+				delete[] visited_states;
+				return state;
+			}
+			std::vector<STATE>* successors = successor(state);
+			for (auto s = successors->begin(); s != successors->end(); s++)
+			{
+				if (std::find(visited_states, visited_states + cap, *s) == visited_states + cap)
+				{
+					// Found an unvisited state
+					stack.push(*s);
+				}
+			}
+			successors->clear();
 		}
 
+		delete[] visited_states;
 		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 	}
 
-	STATE SOKOBAN::dfs(STATE state, int depth, STATE* visited_states, unsigned int& history_size, unsigned int& i, unsigned int& cap, unsigned int& count)
-	{
-		count++;
-		if (this->is_goal(state))
-		{
-			return state;
-		}
-		if (depth == 0)
-		{
-			return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
-		}
-		visited_states[i++] = state;
-		i = i % history_size;
-		cap = std::min(++cap, history_size);
-		std::vector<STATE>* successors = successor(state);
-		STATE res;
-		for (auto s = successors->begin(); s != successors->end(); s++)
-		{
-			if (std::find(visited_states, visited_states + history_size, *s) == visited_states + history_size)
-			{
-				//std::cout << "CHECKING PATH NO. " << count << ' ' << (*s).path.length() << ' ' << (*s).path << '\n';
-				res = dfs(*s, depth - 1, visited_states, history_size, i, cap, count);
-			}
-			if (this->is_goal(res))
-			{
-				delete successors;
-				return res;
-			}
-		}
-		delete successors;
-		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
-	}
-
-	// TODO: make history size relative to depth
-	STATE SOKOBAN::ids(unsigned int& history_size, unsigned int& count)
+	STATE SOKOBAN::ids(const unsigned int& history_size, unsigned int& count)
 	{
 		STATE not_found = STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 		STATE result;
 		for (int depth = 0; depth < 1000; depth++)
 		{
-			std::cout << "SEARCHING DEPTH " << depth << '\t';
-			STATE* visited_states;
-			visited_states = new STATE[history_size];
-			unsigned int i = 0;
-			unsigned int cap = 0;
-
-			result = dfs(this->initial_state(), depth, visited_states, history_size, i, cap, count);
+			std::cout << "SEARCHING DEPTH " << depth << '\n';
+			result = dfs(depth, history_size, count);
 
 			std::cout << "COUNT = " << count << '\n';
-
-			delete[] visited_states;
 
 			if (this->is_goal(result))
 			{

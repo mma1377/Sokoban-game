@@ -36,7 +36,7 @@ struct STATE
     }
     bool operator==(const STATE& other)
     {
-        return (this->player == other.player) && (this->box == other.box);
+		return (this->player == other.player) && (this->box == other.box) && (this->path.length() <= other.path.length());
     }
     bool operator!=(const STATE& other)
     {
@@ -73,11 +73,9 @@ namespace sokobanCore
 			STATE initial_state();
 			bool is_goal(STATE);
 			std::vector<STATE>* successor(STATE);
-			STATE bfs();
+			STATE bfs(const unsigned int&, unsigned int&);
 			STATE bfs_omp();
-			STATE dfs(STATE, int);
-			STATE dfs(STATE, int, STATE*, unsigned int&, unsigned int&, unsigned int&, unsigned int&);
-			STATE ids(unsigned int&, unsigned int&);
-
+			STATE dfs(int, const unsigned int&, unsigned int&);
+			STATE ids(const unsigned int&, unsigned int&);
 	};
 };
