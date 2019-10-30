@@ -74,3 +74,5 @@ Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/CL.write.1.tlog
 .vs/Sokoban game/v16/Browse.VC.db
 .vs/Sokoban game/v16/Browse.VC.db
 >>>>>>> a693556ba043db0339d57aa1ed0fbdb68d7802e7
+*.db
+*.suo
