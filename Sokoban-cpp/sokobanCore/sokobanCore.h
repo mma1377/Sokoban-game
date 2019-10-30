@@ -76,6 +76,7 @@ namespace sokobanCore
 			STATE bfs(const unsigned int&, unsigned int&);
 			STATE bfs_omp(const unsigned int&, unsigned int&);
 			STATE dfs(int, const unsigned int&, unsigned int&);
+			STATE dfs_omp(int, const unsigned int&, unsigned int&);
 			STATE ids(const unsigned int&, unsigned int&);
 	};
 };

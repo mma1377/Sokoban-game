@@ -24,4 +24,5 @@ Class SOKOBAN.SokobanSolver: AutoLayout, AnsiClass, Class, Public, BeforeFieldIn
     BFS_Parallel(): PrivateScope, Public, HideBySig
     BFS_Parallel(UInt32 IsConst): PrivateScope, Public, HideBySig
     DFS(): PrivateScope, Public, HideBySig
+    DFS_Parallel(): PrivateScope, Public, HideBySig
     IDS(): PrivateScope, Public, HideBySig

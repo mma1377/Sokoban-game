@@ -15,6 +15,7 @@ namespace SOKOBAN {
 		String^ BFS();
 		String^ BFS_Parallel();
 		String^ DFS();
+		String^ DFS_Parallel();
 		String^ IDS();
 	};
 }

@@ -136,7 +136,7 @@ namespace Sokoban_game
         private void processBtn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.BFS().ToCharArray();
+            char[] path = sokobanSolver.DFS_Parallel().ToCharArray();
             //char[] path = "RR".ToCharArray();//= sokobanSolver.BFS().ToCharArray();
             var task = Task.Run(async () => await showPath(path));
             //MessageBox.Show(sokobanSolver.test().ToString());

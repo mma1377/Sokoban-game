@@ -88,11 +88,7 @@ namespace sokobanCore {
 
 	bool SOKOBAN::is_goal(STATE state)
 	{
-		if (state.box == this->storage)
-		{
-			return true;
-		}
-		return false;
+		return state.box == this->storage;
 	}
 
 	std::vector<STATE>* SOKOBAN::successor(STATE current_state)
@@ -375,6 +371,78 @@ namespace sokobanCore {
 					// Found an unvisited state
 					stack.push(*s);
 				}
+			}
+			successors->clear();
+		}
+
+		delete[] visited_states;
+		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
+	}
+
+	STATE SOKOBAN::dfs_omp(int max_depth, const unsigned int& history_size, unsigned int& count)
+	{
+		STATE initial_state = this->initial_state();
+		std::stack<STATE> stack;
+		stack.push(initial_state);
+
+		STATE* visited_states;
+		visited_states = new STATE[history_size];
+		unsigned int i = 0;
+		unsigned int cap = 0;
+		omp_set_dynamic(0);
+
+		omp_set_num_threads(omp_get_max_threads());
+
+		STATE state;
+		while (!stack.empty())
+		{
+			//state = queue.front();
+			state = stack.top();
+			stack.pop();
+			if (state.path.length() > max_depth)
+			{
+				continue;
+			}
+			count++;
+			//std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\t';
+			//printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
+			visited_states[i++] = state;
+			i = i % history_size;
+			cap = std::min(++cap, history_size);
+
+			if (is_goal(state))
+			{
+				delete[] visited_states;
+				return state;
+			}
+			std::vector<STATE>* successors = successor(state);
+			for (auto s = successors->begin(); s != successors->end(); s++)
+			{
+				bool foundInHistoryFlag = false;
+#pragma omp parallel
+				{
+					int thread_num = omp_get_thread_num();
+					int number_of_threads = omp_get_num_threads();
+					//std::cout << "thread = " << thread_num << "\n";
+
+					/*auto first = history.begin() + std::floor((float)history.size() * ((float)thread_num / (float)number_of_threads));
+					auto last = history.begin() + std::floor((float)history.size() * ((float)(thread_num + 1) / (float)number_of_threads));*/
+
+					int first = std::floor((float)cap * ((float)thread_num / (float)number_of_threads));
+					int last = std::floor((float)cap * ((float)(thread_num + 1) / (float)number_of_threads));
+					if (std::find(visited_states, visited_states + cap, *s) == visited_states + cap)
+					{
+						// Found an unvisited state
+						
+						foundInHistoryFlag = true;
+					}
+#pragma omp barrier
+					{
+					}
+				}
+				//#pragma omp single
+				if (foundInHistoryFlag)
+					stack.push(*s);
 			}
 			successors->clear();
 		}

@@ -45,8 +45,18 @@ namespace SOKOBAN {
 
 	String^ SokobanSolver::DFS()
 	{
-		throw gcnew System::NotImplementedException();
-		// TODO: insert return statement here
+		unsigned int count = 0;
+		STATE dfs_res = m_Instance->dfs(35, 25000, count);
+		std::cout << "nodes count = " << count << "\npath = " << dfs_res.path;
+		return sokobanConversion::char_array_to_string(dfs_res.path.c_str());
+	}
+
+	String^ SokobanSolver::DFS_Parallel()
+	{
+		unsigned int count = 0;
+		STATE dfs_res = m_Instance->dfs_omp(35, 25000, count);
+		std::cout << "nodes count = " << count << "\npath = " << dfs_res.path;
+		return sokobanConversion::char_array_to_string(dfs_res.path.c_str());
 	}
 
 	String^ SokobanSolver::IDS()
