@@ -3,5 +3,14 @@ sokoban-python/Soko4.txt
 .vscode/settings.json
 .vs/Sokoban game/v16/Browse.VC.db
 .vs/Sokoban game/v16/Browse.VC.db
-*.log
 *.tlog
+*.xml
+*.cache
+*.sarif
+*.pch
+*.lastcodeanalysissucceeded
+*.codeanalysis
+*.pch.codeanalysisast
+*.Build.CppClean.log
+Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.log
+*.log
