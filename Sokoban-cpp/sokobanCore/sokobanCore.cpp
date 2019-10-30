@@ -347,7 +347,7 @@ namespace sokobanCore {
 		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 	}
 
-	STATE SOKOBAN::dfs(STATE state, int depth)
+	STATE SOKOBAN::dfs(STATE state, int depth = -1)
 	{
 		if (this->is_goal(state))
 		{
@@ -358,15 +358,17 @@ namespace sokobanCore {
 			return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 		}
 		std::vector<STATE>* successors = successor(state);
-			for (auto s = successors->begin(); s != successors->end(); s++)
-			{
-				return dfs(state, --depth);
-			}
-		delete successors;
+		for (auto s = successors->begin(); s != successors->end(); s++)
+		{
+			return dfs(*s, depth - 1);
+		}
+
+		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 	}
 
-	STATE SOKOBAN::dfs(STATE state, int depth, STATE* visited_states, int& history_size, int& i, int& cap)
+	STATE SOKOBAN::dfs(STATE state, int depth, STATE* visited_states, unsigned int& history_size, unsigned int& i, unsigned int& cap, unsigned int& count)
 	{
+		count++;
 		if (this->is_goal(state))
 		{
 			return state;
@@ -379,17 +381,49 @@ namespace sokobanCore {
 		i = i % history_size;
 		cap = std::min(++cap, history_size);
 		std::vector<STATE>* successors = successor(state);
-			for (auto s = successors->begin(); s != successors->end(); s++)
+		STATE res;
+		for (auto s = successors->begin(); s != successors->end(); s++)
+		{
+			if (std::find(visited_states, visited_states + history_size, *s) == visited_states + history_size)
 			{
-				if (std::find(visited_states, visited_states + history_size, *s) != visited_states + history_size)
-				{
-					continue;
-				}
-				else
-				{
-					dfs(state, --depth, visited_states, history_size, i, cap);
-				}
+				//std::cout << "CHECKING PATH NO. " << count << ' ' << (*s).path.length() << ' ' << (*s).path << '\n';
+				res = dfs(*s, depth - 1, visited_states, history_size, i, cap, count);
 			}
-			delete successors;
+			if (this->is_goal(res))
+			{
+				delete successors;
+				return res;
+			}
+		}
+		delete successors;
+		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
+	}
+
+	// TODO: make history size relative to depth
+	STATE SOKOBAN::ids(unsigned int& history_size, unsigned int& count)
+	{
+		STATE not_found = STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
+		STATE result;
+		for (int depth = 0; depth < 1000; depth++)
+		{
+			std::cout << "SEARCHING DEPTH " << depth << '\t';
+			STATE* visited_states;
+			visited_states = new STATE[history_size];
+			unsigned int i = 0;
+			unsigned int cap = 0;
+
+			result = dfs(this->initial_state(), depth, visited_states, history_size, i, cap, count);
+
+			std::cout << "COUNT = " << count << '\n';
+
+			delete[] visited_states;
+
+			if (this->is_goal(result))
+			{
+				break;
+			}
+		}
+
+		return result;
 	}
 }

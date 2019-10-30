@@ -1,78 +1,15 @@
 sokoban-python/Soko4.txt
 .vscode/c_cpp_properties.json
 .vscode/settings.json
-<<<<<<< HEAD
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/unsuccessfulbuild
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/CL.write.1.tlog
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/CL.read.1.tlog
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/CL.command.1.tlog
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.pdb
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.obj
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.log
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.idb
-Sokoban-cpp/SOKOBAN/Debug/vc142.pdb
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.vcxprojAssemblyReference.cache
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.tlog/unsuccessfulbuild
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.tlog/CL.write.1.tlog
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.tlog/CL.read.1.tlog
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.tlog/CL.command.1.tlog
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.obj
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.log
-Sokoban game/obj/Debug/Sokoban game.csprojAssemblyReference.cache
-Sokoban game/obj/Debug/DesignTimeResolveAssemblyReferences.cache
-.vs/Sokoban game/v16/Solution.VC.db-wal
-.vs/Sokoban game/v16/Solution.VC.db-shm
-.vs/Sokoban game/v16/Solution.VC.db
-.vs/Sokoban game/v16/Server/sqlite3/storage.ide-wal
-.vs/Sokoban game/v16/Server/sqlite3/storage.ide-shm
-.vs/Sokoban game/v16/ipch/AutoPCH/6e76cd1d5b725e00/SOKOBANCORE.ipch
-.vs/Sokoban game/v16/Browse.VC.opendb
-.vs/Sokoban game/v16/Browse.VC.db
-.vs/Sokoban game/v16/.suo
-.vs/Sokoban game/v16/.suo
-.vs/Sokoban game/v16/Browse.VC.db
-.vs/Sokoban game/v16/ipch/AutoPCH/6e76cd1d5b725e00/SOKOBANCORE.ipch
-.vs/Sokoban game/v16/Solution.VC.db
-Sokoban game/obj/Debug/DesignTimeResolveAssemblyReferences.cache
-Sokoban game/obj/Debug/Sokoban game.csprojAssemblyReference.cache
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.log
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.obj
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.tlog/CL.command.1.tlog
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.tlog/CL.read.1.tlog
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.tlog/CL.write.1.tlog
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.vcxprojAssemblyReference.cache
-Sokoban-cpp/SOKOBAN/Debug/vc142.pdb
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.idb
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.log
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.obj
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.pdb
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/CL.command.1.tlog
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/CL.read.1.tlog
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/CL.write.1.tlog
-.vs/Sokoban game/v16/Solution.VC.db
-.vs/Sokoban game/v16/.suo
-.vs/Sokoban game/v16/Browse.VC.db
-.vs/Sokoban game/v16/ipch/AutoPCH/6e76cd1d5b725e00/SOKOBANCORE.ipch
-.vs/Sokoban game/v16/Solution.VC.db
-Sokoban game/obj/Debug/DesignTimeResolveAssemblyReferences.cache
-Sokoban game/obj/Debug/Sokoban game.csprojAssemblyReference.cache
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.log
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.obj
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.tlog/CL.command.1.tlog
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.tlog/CL.read.1.tlog
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.tlog/CL.write.1.tlog
-Sokoban-cpp/SOKOBAN/Debug/SOKOBAN.vcxprojAssemblyReference.cache
-Sokoban-cpp/SOKOBAN/Debug/vc142.pdb
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.idb
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.log
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.obj
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.pdb
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/CL.command.1.tlog
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/CL.read.1.tlog
-Sokoban-cpp/sokobanCore/Debug/sokobanCore.tlog/CL.write.1.tlog
-=======
-.vs/Sokoban game/v16/Browse.VC.db
-.vs/Sokoban game/v16/Browse.VC.db
->>>>>>> a693556ba043db0339d57aa1ed0fbdb68d7802e7
+*.tlog
+*.xml
+*.cache
+*.sarif
+*.pch
+*.lastcodeanalysissucceeded
+*.codeanalysis
+*.pch.codeanalysisast
+*.Build.CppClean.log
 *.db
 *.suo
+*.log
