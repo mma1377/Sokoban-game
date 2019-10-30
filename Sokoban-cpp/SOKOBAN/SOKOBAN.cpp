@@ -15,9 +15,8 @@ namespace SOKOBAN {
 
 	}
 
-	String^ SokobanSolver::BFS()
+	String^ SokobanSolver::BFS(const unsigned int historySize)
 	{
-		const unsigned int historySize = 50000;
 		std::cout << "Now lest do some BFS...\n";
 		unsigned int count = 0;
 		STATE bfs_res = m_Instance->bfs(historySize, count);
@@ -34,14 +33,14 @@ namespace SOKOBAN {
 		return sokobanConversion::char_array_to_string(bfs_res.path.c_str());
 	}
 
-	String^ SokobanSolver::BFS(const unsigned int historySize)
+	String^ SokobanSolver::BFS()
 	{
-		return BFS(50000);
+		return BFS(25000);
 	}
 
 	String^ SokobanSolver::BFS_Parallel()
 	{
-		return BFS_Parallel(50000);
+		return BFS_Parallel(25000);
 	}
 
 	String^ SokobanSolver::DFS()
