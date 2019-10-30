@@ -207,13 +207,15 @@ namespace sokobanCore {
 				}
 			}
 			successors->clear();
+			if (count % 1000 == 0)
+				std::cout << count << '\n';
 		}
 
 		delete[] visited_states;
 		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 	}
 
-	STATE SOKOBAN::bfs_omp()
+	STATE SOKOBAN::bfs_omp(const unsigned int& history_size, unsigned int& count)
 	{
 		STATE initial_state = this->initial_state();
 		std::queue<STATE> queue;
@@ -227,7 +229,7 @@ namespace sokobanCore {
 		int indx = 0;
 		int top = 0;
 		//std::vector<STATE> history;
-		int history_size = 50000;
+		//int history_size = 50000;
 		STATE defaultState = STATE();
 		//history.resize(history_size, defaultState);
 
@@ -236,7 +238,7 @@ namespace sokobanCore {
 			history[i] = defaultState;
 		}
 
-		int count = 0;
+		//int count = 0;
 		while (!queue.empty())
 		{
 			count++;

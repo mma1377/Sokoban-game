@@ -10,8 +10,8 @@ namespace SOKOBAN {
 	{
 	public:
 		SokobanSolver(String^ inputDirectory);
-		void BFSTest();
-		void BFS_OMPTest();
+		String^ BFS(const unsigned int);
+		String^ BFS_Parallel(const unsigned int);
 		String^ BFS();
 		String^ BFS_Parallel();
 		String^ DFS();

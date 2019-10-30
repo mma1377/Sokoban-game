@@ -19,9 +19,9 @@ Class SOKOBAN.SokobanSolver: AutoLayout, AnsiClass, Class, Public, BeforeFieldIn
   :SOKOBANWrapper.ManagedObject<sokobanCore::SOKOBAN>
     Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
-    BFSTest(): PrivateScope, Public, HideBySig
-    BFS_OMPTest(): PrivateScope, Public, HideBySig
     BFS(): PrivateScope, Public, HideBySig
+    BFS(UInt32 IsConst): PrivateScope, Public, HideBySig
     BFS_Parallel(): PrivateScope, Public, HideBySig
+    BFS_Parallel(UInt32 IsConst): PrivateScope, Public, HideBySig
     DFS(): PrivateScope, Public, HideBySig
     IDS(): PrivateScope, Public, HideBySig

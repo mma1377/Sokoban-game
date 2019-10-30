@@ -15,34 +15,33 @@ namespace SOKOBAN {
 
 	}
 
-	void SokobanSolver::BFSTest()
-	{
-		std::cout << "Now lest do some BFS...\n";
-		STATE bfs_res = m_Instance->bfs();
-		std::cout << bfs_res.player.first << ' ' << bfs_res.player.second << '\t' << bfs_res.box.first << ' ' << bfs_res.box.second << '\n';
-	}
-	
-	void SokobanSolver::BFS_OMPTest()
-	{
-		std::cout << "Now lest do some BFS...\n";
-		STATE bfs_res = m_Instance->bfs_omp();
-		std::cout << "result "<< bfs_res.player.first << ' ' << bfs_res.player.second << '\t' << bfs_res.box.first << ' ' << bfs_res.box.second << '\n';
-	}
-
 	String^ SokobanSolver::BFS()
 	{
+		const unsigned int historySize = 50000;
 		std::cout << "Now lest do some BFS...\n";
-		STATE bfs_res = m_Instance->bfs();
-		std::cout << "result " << bfs_res.player.first << ' ' << bfs_res.player.second << '\t' << bfs_res.box.first << ' ' << bfs_res.box.second << '\n';
+		unsigned int count = 0;
+		STATE bfs_res = m_Instance->bfs(historySize, count);
+		std::cout << "nodes count = " << count << "\npath = " << bfs_res.path;
 		return sokobanConversion::char_array_to_string(bfs_res.path.c_str());
+	}
+
+	String^ SokobanSolver::BFS_Parallel(const unsigned int historySize)
+	{
+		std::cout << "Now lest do some BFS...\n";
+		unsigned int count = 0;
+		STATE bfs_res = m_Instance->bfs_omp(historySize, count);
+		std::cout << "nodes count = " << count << "\npath = " << bfs_res.path;
+		return sokobanConversion::char_array_to_string(bfs_res.path.c_str());
+	}
+
+	String^ SokobanSolver::BFS(const unsigned int historySize)
+	{
+		return BFS(50000);
 	}
 
 	String^ SokobanSolver::BFS_Parallel()
 	{
-		std::cout << "Now lest do some BFS...\n";
-		STATE bfs_res = m_Instance->bfs_omp();
-		std::cout << "result " << bfs_res.player.first << ' ' << bfs_res.player.second << '\t' << bfs_res.box.first << ' ' << bfs_res.box.second << '\n';
-		return sokobanConversion::char_array_to_string(bfs_res.path.c_str());
+		return BFS_Parallel(50000);
 	}
 
 	String^ SokobanSolver::DFS()
