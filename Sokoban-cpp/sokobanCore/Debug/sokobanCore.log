@@ -1,10 +1,10 @@
 ﻿  sokobanCore.cpp
-D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(233): warning C4018: '<': signed/unsigned mismatch
-D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(248): warning C4018: '>': signed/unsigned mismatch
-D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(276): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(277): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(350): warning C4018: '>': signed/unsigned mismatch
-D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(402): warning C4018: '>': signed/unsigned mismatch
-D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(431): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(432): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(236): warning C4018: '<': signed/unsigned mismatch
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(251): warning C4018: '>': signed/unsigned mismatch
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(281): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(282): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(357): warning C4018: '>': signed/unsigned mismatch
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(409): warning C4018: '>': signed/unsigned mismatch
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(438): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban-cpp\sokobanCore\sokobanCore.cpp(439): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   sokobanCore.vcxproj -> D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Debug\sokobanCore.lib

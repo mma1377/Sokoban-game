@@ -17,43 +17,45 @@ for the answer in the search space.
 #include <math.h>
 #include <chrono>
 
-typedef std::pair<short, short> INTPAIR;
-struct STATE
-{
-    INTPAIR player;
-    INTPAIR box;
-    std::string path;
-
-    STATE()
-    {
-
-    };
-    STATE(INTPAIR plyr, INTPAIR b, std::string p)
-    {
-        this->player = plyr;
-        this->box = b;
-        this->path = p;
-    }
-    bool operator==(const STATE& other)
-    {
-		return (this->player == other.player) && (this->box == other.box) && (this->path.length() <= other.path.length());
-    }
-    bool operator!=(const STATE& other)
-    {
-        return !(*this == other);
-    }
-	STATE& operator=(const STATE& other)
-	{
-		this->player = other.player;
-		this->box = other.box;
-		this->path = other.path;
-		return *this;
-	}
-};
-
-
 namespace sokobanCore
 {
+	typedef std::pair<short, short> INTPAIR;
+
+	extern bool foundInSearchParallelHistoryGlobalFlag;
+
+	struct STATE
+	{
+		INTPAIR player;
+		INTPAIR box;
+		std::string path;
+
+		STATE()
+		{
+
+		};
+		STATE(INTPAIR plyr, INTPAIR b, std::string p)
+		{
+			this->player = plyr;
+			this->box = b;
+			this->path = p;
+		}
+		bool operator==(const STATE& other)
+		{
+			return foundInSearchParallelHistoryGlobalFlag || (this->player == other.player) && (this->box == other.box) && (this->path.length() <= other.path.length());
+		}
+		bool operator!=(const STATE & other)
+		{
+			return !(*this == other);
+		}
+		STATE& operator=(const STATE & other)
+		{
+			this->player = other.player;
+			this->box = other.box;
+			this->path = other.path;
+			return *this;
+		}
+	};
+
 	class SOKOBAN
 	{
 		private:

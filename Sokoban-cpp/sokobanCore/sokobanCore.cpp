@@ -4,6 +4,9 @@
 //#define _SECURE_SCL 0
 
 namespace sokobanCore {
+
+	bool foundInSearchParallelHistoryGlobalFlag = false;
+
 	SOKOBAN::SOKOBAN(const char* input_file)
 	{
 		std::ifstream infile(input_file);
@@ -233,7 +236,7 @@ namespace sokobanCore {
 		for (int i = 0; i < history_size; i++) {
 			history[i] = defaultState;
 		}
-
+		
 		//int count = 0;
 		while (!queue.empty())
 		{
@@ -263,7 +266,9 @@ namespace sokobanCore {
 			for (auto s = successors->begin(); s != successors->end(); s++)
 			{
 				bool flag = true;
-				bool foundInHistoryFlag = false;
+				//bool foundInHistoryFlag = false;
+				//STATEParallelOPT succesorS = *s;
+				foundInSearchParallelHistoryGlobalFlag = false;
 #pragma omp parallel
 				{
 					int thread_num = omp_get_thread_num();
@@ -295,7 +300,7 @@ namespace sokobanCore {
 					}*/
 
 					if (std::find(history + first, history + last, *s) != history + last) {
-						foundInHistoryFlag = true;
+						foundInSearchParallelHistoryGlobalFlag = true;
 					}
 
 					/*for (int i = first; i != last; i++) {
@@ -316,8 +321,10 @@ namespace sokobanCore {
 					}
 				}
 //#pragma omp single
-				if (foundInHistoryFlag)
+				if (foundInSearchParallelHistoryGlobalFlag) {
+					foundInSearchParallelHistoryGlobalFlag = false;
 					continue;
+				}
 				queue.push(*s);
 
 			}
