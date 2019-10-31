@@ -31,22 +31,23 @@ namespace sokobanCore
 
 		STATE()
 		{
-
 		};
-		STATE(INTPAIR plyr, INTPAIR b, std::string p)
+
+		STATE(INTPAIR plyr, INTPAIR b, std::string p) :
+			player(plyr), box(b), path(p)
 		{
-			this->player = plyr;
-			this->box = b;
-			this->path = p;
 		}
+
 		bool operator==(const STATE& other)
 		{
 			return foundInSearchParallelHistoryGlobalFlag || (this->player == other.player) && (this->box == other.box) && (this->path.length() <= other.path.length());
 		}
+
 		bool operator!=(const STATE & other)
 		{
 			return !(*this == other);
 		}
+
 		STATE& operator=(const STATE & other)
 		{
 			this->player = other.player;

@@ -98,71 +98,104 @@ namespace sokobanCore {
 	{
 		std::vector<STATE>* next_states;
 		next_states = new std::vector<STATE>;
-		// Horizontal movements
-		char h[2] = {'L', 'R'};
-		// Vertical movements
-		char v[2] = {'U', 'D'};
-		for (short i = -1; i < 2; i += 2)
-		{
-			// Move player one step to the left/right
-			short next_plyr_x = current_state.player.first + i;
-			short next_plyr_y = current_state.player.second;
 
-			// Check if the move is valid
-			if (game_map[next_plyr_y][next_plyr_x] == 1)
+		short plyr_x = current_state.player.first;
+		short plyr_y = current_state.player.second;
+		short box_x = current_state.box.first;
+		short box_y = current_state.box.second;
+
+		//Move player one step to the left
+		// Check if the move is valid
+		if (game_map[plyr_y][plyr_x - 1])
+		{
+			// Check if the player is moving into the box
+			if ((box_x == plyr_x - 1) && (box_y == plyr_y))
 			{
-				// Check if the player is moving into the box
-				if (current_state.box.first == next_plyr_x && current_state.box.second == next_plyr_y)
+				// Check if the box is movable in this direction
+				if (game_map[box_y][box_x - 1])
 				{
-					short next_box_x = current_state.box.first + i;
-					short next_box_y = current_state.box.second;
-					// Check if the box is movable in this direction
-					if (game_map[next_box_y][next_box_x] == 1)
-					{
-						next_states->push_back(STATE(std::make_pair(next_plyr_x, next_plyr_y), 
-										std::make_pair(next_box_x, next_box_y), current_state.path + h[std::max((short)0, i)]));
-					}
-				}
-				else
-				{
-					next_states->push_back(STATE(
-									std::make_pair(next_plyr_x, next_plyr_y), 
-									std::make_pair(current_state.box.first, current_state.box.second),
-									current_state.path + h[std::max((short)0, i)]));
+					next_states->push_back(STATE(std::make_pair(plyr_x - 1, plyr_y),
+						std::make_pair(box_x - 1, box_y), current_state.path + 'L'));
 				}
 			}
-
-			// Move player one step upward/downward
-			next_plyr_x = current_state.player.first;
-			next_plyr_y = current_state.player.second + i;
-
-			// Check if the move is valid
-			if (game_map[next_plyr_y][next_plyr_x] == 1)
+			else
 			{
-				// Check if the player is moving into the box
-				if (current_state.box.first == next_plyr_x && current_state.box.second == next_plyr_y)
-				{
-					short next_box_x = current_state.box.first;
-					short next_box_y = current_state.box.second + i;
-					// Check if the box is movable in this direction
-					if (game_map[next_box_y][next_box_x] == 1)
-					{
-						next_states->push_back(STATE(std::make_pair(next_plyr_x, next_plyr_y), 
-										std::make_pair(next_box_x, next_box_y), current_state.path + v[std::max((short)0, i)]));
-					}
-				}
-				else
-				{
-					next_states->push_back(STATE(
-									std::make_pair(next_plyr_x, next_plyr_y), 
-									std::make_pair(current_state.box.first, current_state.box.second),
-									current_state.path + v[std::max((short)0, i)]));
-				}
-				
+				next_states->push_back(STATE(
+					std::make_pair(plyr_x - 1, plyr_y),
+					std::make_pair(box_x, box_y),
+					current_state.path + 'L'));
 			}
 		}
 
-		// EXPERIMENTAL: Shuffling the successors MAY improve DFS
+		//Move player one step to the right
+		// Check if the move is valid
+		if (game_map[plyr_y][plyr_x + 1])
+		{
+			// Check if the player is moving into the box
+			if ((box_x == plyr_x + 1) && (box_y == plyr_y))
+			{
+				// Check if the box is movable in this direction
+				if (game_map[box_y][box_x + 1])
+				{
+					next_states->push_back(STATE(std::make_pair(plyr_x + 1, plyr_y),
+						std::make_pair(box_x + 1, box_y), current_state.path + 'R'));
+				}
+			}
+			else
+			{
+				next_states->push_back(STATE(
+					std::make_pair(plyr_x + 1, plyr_y),
+					std::make_pair(box_x, box_y),
+					current_state.path + 'R'));
+			}
+		}
+
+		// Move player one step upward
+		// Check if the move is valid
+		if (game_map[plyr_y - 1][plyr_x])
+		{
+			// Check if the player is moving into the box
+			if ((box_x == plyr_x) && (box_y == plyr_y - 1))
+			{
+				// Check if the box is movable in this direction
+				if (game_map[box_y - 1][box_x])
+				{
+					next_states->push_back(STATE(std::make_pair(plyr_x, plyr_y - 1),
+						std::make_pair(box_x, box_y - 1), current_state.path + 'U'));
+				}
+			}
+			else
+			{
+				next_states->push_back(STATE(
+					std::make_pair(plyr_x, plyr_y - 1),
+					std::make_pair(box_x, box_y),
+					current_state.path + 'U'));
+			}
+		}
+
+		// Move player one step downward
+		// Check if the move is valid
+		if (game_map[plyr_y + 1][plyr_x])
+		{
+			// Check if the player is moving into the box
+			if ((box_x == plyr_x) && (box_y == plyr_y + 1))
+			{
+				// Check if the box is movable in this direction
+				if (game_map[box_y + 1][box_x])
+				{
+					next_states->push_back(STATE(std::make_pair(plyr_x, plyr_y + 1),
+						std::make_pair(box_x, box_y + 1), current_state.path + 'D'));
+				}
+			}
+			else
+			{
+				next_states->push_back(STATE(
+					std::make_pair(plyr_x, plyr_y + 1),
+					std::make_pair(box_x, box_y),
+					current_state.path + 'D'));
+			}
+		}
+
 		//std::random_shuffle(next_states->begin(), next_states->end());
 
 		return next_states;
