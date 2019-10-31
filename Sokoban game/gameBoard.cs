@@ -46,17 +46,80 @@ namespace Sokoban_game
         {
             string input = System.IO.File.ReadAllText(inputFileDirectory);
             parse_problem_data_str_into_board(input);
-            var processBtn = new System.Windows.Forms.Button();
+
+            var BFSBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            processBtn.Location = new System.Drawing.Point(8, 32 * GameSize.y + 8);
-            processBtn.Name = "processBtn";
-            processBtn.Size = new System.Drawing.Size(64, 24);
-            processBtn.TabIndex = 0;
-            processBtn.Text = "Process";
-            processBtn.UseVisualStyleBackColor = true;
-            processBtn.Click += new System.EventHandler(processBtn_click);
+            BFSBtn.Location = new System.Drawing.Point(2, 32 * GameSize.y + 8);
+            BFSBtn.Name = "BFS";
+            BFSBtn.Size = new System.Drawing.Size(74, 24);
+            BFSBtn.TabIndex = 0;
+            BFSBtn.Text = "BFS";
+            BFSBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7);
+            BFSBtn.UseVisualStyleBackColor = true;
+            BFSBtn.Click += new System.EventHandler(BFS_Btn_click);
+
+            var BFSParallelBtn = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            BFSParallelBtn.Location = new System.Drawing.Point(78, 32 * GameSize.y + 8);
+            BFSParallelBtn.Name = "BFSParallel";
+            BFSParallelBtn.Size = new System.Drawing.Size(74, 24);
+            BFSParallelBtn.TabIndex = 0;
+            BFSParallelBtn.Text = "BFS Parallel";
+            BFSParallelBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7);
+            BFSParallelBtn.UseVisualStyleBackColor = true;
+            BFSParallelBtn.Click += new System.EventHandler(BFS_Parallel_Btn_click);
+
+            var DFSBtn = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            DFSBtn.Location = new System.Drawing.Point(154, 32 * GameSize.y + 8);
+            DFSBtn.Name = "DFS";
+            DFSBtn.Size = new System.Drawing.Size(74, 24);
+            DFSBtn.TabIndex = 0;
+            DFSBtn.Text = "DFS";
+            DFSBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7);
+            DFSBtn.UseVisualStyleBackColor = true;
+            DFSBtn.Click += new System.EventHandler(DFS_Btn_click);
+
+            var DFSParallelBtn = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            DFSParallelBtn.Location = new System.Drawing.Point(230, 32 * GameSize.y + 8);
+            DFSParallelBtn.Name = "DFSParallel";
+            DFSParallelBtn.Size = new System.Drawing.Size(74, 24);
+            DFSParallelBtn.TabIndex = 0;
+            DFSParallelBtn.Text = "DFS Parallel";
+            DFSParallelBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7);
+            DFSParallelBtn.UseVisualStyleBackColor = true;
+            DFSParallelBtn.Click += new System.EventHandler(DFS_Parallel_Btn_click);
+
+            var IDSBtn = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            IDSBtn.Location = new System.Drawing.Point(306, 32 * GameSize.y + 8);
+            IDSBtn.Name = "IDS";
+            IDSBtn.Size = new System.Drawing.Size(74, 24);
+            IDSBtn.TabIndex = 0;
+            IDSBtn.Text = "IDS";
+            IDSBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7);
+            IDSBtn.UseVisualStyleBackColor = true;
+            IDSBtn.Click += new System.EventHandler(IDS_Btn_click);
+
+            var IDSParallelBtn = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            IDSParallelBtn.Location = new System.Drawing.Point(382, 32 * GameSize.y + 8);
+            IDSParallelBtn.Name = "IDS";
+            IDSParallelBtn.Size = new System.Drawing.Size(74, 24);
+            IDSParallelBtn.TabIndex = 0;
+            IDSParallelBtn.Text = "IDS Parallel";
+            IDSParallelBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7);
+            IDSParallelBtn.UseVisualStyleBackColor = true;
+            IDSParallelBtn.Click += new System.EventHandler(IDS_Parallel_Btn_click);
+
             this.ResumeLayout();
-            this.Controls.Add(processBtn);
+            this.Controls.Add(BFSBtn);
+            this.Controls.Add(BFSParallelBtn);
+            this.Controls.Add(DFSBtn);
+            this.Controls.Add(DFSParallelBtn);
+            this.Controls.Add(IDSBtn);
+            this.Controls.Add(IDSParallelBtn);
         }
 
         private bool isBox(Vector2 position, ref int index)
@@ -133,36 +196,46 @@ namespace Sokoban_game
             }
         }
 
-        private void processBtn_click(object sender, EventArgs e)
+        private void BFS_Btn_click(object sender, EventArgs e)
+        {
+            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            char[] path = sokobanSolver.BFS().ToCharArray();
+            var task = Task.Run(async () => await showPath(path));
+        }
+
+        private void BFS_Parallel_Btn_click(object sender, EventArgs e)
+        {
+            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            char[] path = sokobanSolver.BFS_Parallel().ToCharArray();
+            var task = Task.Run(async () => await showPath(path));
+        }
+
+        private void DFS_Btn_click(object sender, EventArgs e)
+        {
+            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            char[] path = sokobanSolver.DFS().ToCharArray();
+            var task = Task.Run(async () => await showPath(path));
+        }
+
+        private void DFS_Parallel_Btn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
             char[] path = sokobanSolver.DFS_Parallel().ToCharArray();
-            //char[] path = "RR".ToCharArray();//= sokobanSolver.BFS().ToCharArray();
             var task = Task.Run(async () => await showPath(path));
-            //MessageBox.Show(sokobanSolver.test().ToString());
-            //MessageBox.Show("test");
-            //\sokoban-cpp\Sokoban\Release
-            //var engine = Python.CreateEngine();
-            //dynamic py = engine.ExecuteFile(System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\sokoban-python\\sokoban.py");
-            //SOKOBAN = py.SOKOBAN(inputFileDirectory);
-            //List<IronPython.Runtime.PythonTuple> res = SOKOBAN.test();
-            //for(int i = 0; i < res.Count; i++)
-            //{
-            //    var agentPos = ((IronPython.Runtime.PythonTuple)res[i].__getslice__(0, 0));
-            //    var boxPos = ((IronPython.Runtime.PythonTuple)res[i].__getslice__(1, 1));
-            //    MessageBox.Show(((int)agentPos.__getslice__(0, 0)).ToString());
-            //    //Timer timer1 = new Timer
-            //    //{
-            //    //    Interval = 1000
-            //    //};
-            //    //timer1.Enabled = true;
-            //    //timer1.Tick += new System.EventHandler(OnTimerEvent);
-            //}
         }
 
-        private void OnTimerEvent(object sender, EventArgs e)
+        private void IDS_Btn_click(object sender, EventArgs e)
         {
-            
+            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            char[] path = sokobanSolver.IDS().ToCharArray();
+            var task = Task.Run(async () => await showPath(path));
+        }
+
+        private void IDS_Parallel_Btn_click(object sender, EventArgs e)
+        {
+            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            char[] path = sokobanSolver.IDS().ToCharArray();
+            var task = Task.Run(async () => await showPath(path));
         }
 
         private void parse_problem_data_str_into_board(string problemDataStr)
@@ -193,7 +266,14 @@ namespace Sokoban_game
                     return;
                 }
             }
-            allocate_sprites();
+            int width = GameSize.x * 32;
+            int offsetX = 0; 
+            if (width < 458)
+            {
+                offsetX = (458 % width) / 2;
+                width = 458;
+            }
+            allocate_sprites(offsetX);
             boxesLocations = new List<Vector2>();
             spotsLocations = new List<Vector2>();
             for (int i = 0; i < GameSize.y; i++)
@@ -221,11 +301,12 @@ namespace Sokoban_game
                     }
                 }
             }
-            ClientSize = new System.Drawing.Size(GameSize.x * 32, GameSize.y * 32 + 40);
+            int height = GameSize.y * 32 + 40;
+            ClientSize = new System.Drawing.Size(width, height);
             ResumeLayout();
         }
 
-        private void allocate_sprites()
+        private void allocate_sprites(int offsetX)
         {
             sprites = new PictureBox[GameSize.x, GameSize.y];
             for(int i = 0; i < GameSize.x; i++)
@@ -233,7 +314,7 @@ namespace Sokoban_game
                 for (int j = 0; j < GameSize.y; j++)
                 {
                     sprites[i, j] = new PictureBox();
-                    sprites[i, j].Location = new System.Drawing.Point(32 * i, 32 * j);
+                    sprites[i, j].Location = new System.Drawing.Point(offsetX + 32 * i, 32 * j);
                     sprites[i, j].Name = "sprite +" + i.ToString() + "_" + j.ToString();
                     sprites[i, j].Size = new System.Drawing.Size(32, 32);
                     sprites[i, j].TabIndex = 0;

@@ -33,6 +33,7 @@
             // 
             // InputBtn
             // 
+            this.InputBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.InputBtn.Location = new System.Drawing.Point(90, 124);
             this.InputBtn.Name = "InputBtn";
             this.InputBtn.Size = new System.Drawing.Size(75, 23);
