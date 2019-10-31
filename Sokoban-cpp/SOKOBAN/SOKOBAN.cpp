@@ -79,10 +79,32 @@ namespace SOKOBAN {
 		return DFS_Parallel(UINT_MAX);
 	}
 
+	String^ SokobanSolver::IDS(const unsigned int historySize)
+	{
+		std::cout << "Now lest do some BFS...\n";
+		unsigned int count = 0;
+		sokobanCore::STATE bfs_res = m_Instance->ids(historySize, count);
+		std::cout << "nodes count = " << count << "\npath = " << bfs_res.path;
+		return sokobanConversion::char_array_to_string(bfs_res.path.c_str());
+	}
+
+	String^ SokobanSolver::IDS_Parallel(const unsigned int historySize)
+	{
+		std::cout << "Now lest do some BFS...\n";
+		unsigned int count = 0;
+		sokobanCore::STATE bfs_res = m_Instance->ids_omp(historySize, count);
+		std::cout << "nodes count = " << count << "\npath = " << bfs_res.path;
+		return sokobanConversion::char_array_to_string(bfs_res.path.c_str());
+	}
+
 	String^ SokobanSolver::IDS()
 	{
-		throw gcnew System::NotImplementedException();
-		// TODO: insert return statement here
+		return IDS(12500);
+	}
+
+	String^ SokobanSolver::IDS_Parallel()
+	{
+		return IDS_Parallel(12500);
 	}
 
 	/*sTest::sTest(std::string inputDirectory): ManagedObject(new sokobanCore::SOKOBAN(inputDirectory))

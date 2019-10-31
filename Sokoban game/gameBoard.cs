@@ -213,14 +213,14 @@ namespace Sokoban_game
         private void DFS_Btn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.DFS().ToCharArray();
+            char[] path = sokobanSolver.DFS(90).ToCharArray();
             var task = Task.Run(async () => await showPath(path));
         }
 
         private void DFS_Parallel_Btn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.DFS_Parallel().ToCharArray();
+            char[] path = sokobanSolver.DFS_Parallel(90).ToCharArray();
             var task = Task.Run(async () => await showPath(path));
         }
 

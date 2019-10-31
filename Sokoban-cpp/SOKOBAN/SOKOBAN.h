@@ -20,6 +20,9 @@ namespace SOKOBAN {
 		String^ DFS_Parallel(int, const unsigned int);
 		String^ DFS_Parallel(int);
 		String^ DFS_Parallel();
+		String^ IDS(const unsigned int);
 		String^ IDS();
+		String^ IDS_Parallel(const unsigned int);
+		String^ IDS_Parallel();
 	};
 }

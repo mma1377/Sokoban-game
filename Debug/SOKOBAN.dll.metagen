@@ -30,3 +30,6 @@ Class SOKOBAN.SokobanSolver: AutoLayout, AnsiClass, Class, Public, BeforeFieldIn
     DFS_Parallel(Int32): PrivateScope, Public, HideBySig
     DFS_Parallel(Int32, UInt32 IsConst): PrivateScope, Public, HideBySig
     IDS(): PrivateScope, Public, HideBySig
+    IDS(UInt32 IsConst): PrivateScope, Public, HideBySig
+    IDS_Parallel(): PrivateScope, Public, HideBySig
+    IDS_Parallel(UInt32 IsConst): PrivateScope, Public, HideBySig

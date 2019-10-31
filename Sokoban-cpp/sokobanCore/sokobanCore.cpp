@@ -229,13 +229,9 @@ namespace sokobanCore {
 		int top = 0;
 		//std::vector<STATE> history;
 		//int history_size = 50000;
-		STATE defaultState = STATE();
 		//history.resize(history_size, defaultState);
 
 		STATE* history = new STATE[history_size];
-		for (int i = 0; i < history_size; i++) {
-			history[i] = defaultState;
-		}
 		
 		//int count = 0;
 		while (!queue.empty())
@@ -425,7 +421,7 @@ namespace sokobanCore {
 			std::vector<STATE>* successors = successor(state);
 			for (auto s = successors->begin(); s != successors->end(); s++)
 			{
-				bool foundInHistoryFlag = false;
+				foundInSearchParallelHistoryGlobalFlag = false;
 #pragma omp parallel
 				{
 					int thread_num = omp_get_thread_num();
@@ -437,19 +433,21 @@ namespace sokobanCore {
 
 					int first = std::floor((float)cap * ((float)thread_num / (float)number_of_threads));
 					int last = std::floor((float)cap * ((float)(thread_num + 1) / (float)number_of_threads));
-					if (std::find(visited_states, visited_states + cap, *s) == visited_states + cap)
-					{
-						// Found an unvisited state
-						
-						foundInHistoryFlag = true;
+					
+					if (std::find(visited_states + first, visited_states + last, *s) != visited_states + last) {
+						foundInSearchParallelHistoryGlobalFlag = true;
 					}
+
 #pragma omp barrier
 					{
 					}
 				}
 				//#pragma omp single
-				if (foundInHistoryFlag)
-					stack.push(*s);
+				if (foundInSearchParallelHistoryGlobalFlag) {
+					foundInSearchParallelHistoryGlobalFlag = false;
+					continue;
+				}
+				stack.push(*s);
 			}
 			successors->clear();
 		}
@@ -466,6 +464,26 @@ namespace sokobanCore {
 		{
 			std::cout << "SEARCHING DEPTH " << depth << '\n';
 			result = dfs(depth, history_size, count);
+
+			std::cout << "COUNT = " << count << '\n';
+
+			if (this->is_goal(result))
+			{
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	STATE SOKOBAN::ids_omp(const unsigned int& history_size, unsigned int& count)
+	{
+		STATE not_found = STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
+		STATE result;
+		for (int depth = 0; depth < 1000; depth++)
+		{
+			std::cout << "SEARCHING DEPTH " << depth << '\n';
+			result = dfs_omp(depth, history_size, count);
 
 			std::cout << "COUNT = " << count << '\n';
 
