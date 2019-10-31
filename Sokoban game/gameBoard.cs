@@ -234,7 +234,7 @@ namespace Sokoban_game
         private void IDS_Parallel_Btn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.IDS().ToCharArray();
+            char[] path = sokobanSolver.IDS_Parallel().ToCharArray();
             var task = Task.Run(async () => await showPath(path));
         }
 
