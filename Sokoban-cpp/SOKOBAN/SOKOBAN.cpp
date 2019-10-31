@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace SOKOBAN {
-	
+
 	/*SokobanSolver::SokobanSolver()
 	{
 	}
@@ -43,20 +43,40 @@ namespace SOKOBAN {
 		return BFS_Parallel(25000);
 	}
 
-	String^ SokobanSolver::DFS()
+	String^ SokobanSolver::DFS(int max_depth, const unsigned int history_size)
 	{
 		unsigned int count = 0;
-		STATE dfs_res = m_Instance->dfs(35, 25000, count);
+		STATE dfs_res = m_Instance->dfs(max_depth, history_size, count);
 		std::cout << "nodes count = " << count << "\npath = " << dfs_res.path;
 		return sokobanConversion::char_array_to_string(dfs_res.path.c_str());
 	}
 
-	String^ SokobanSolver::DFS_Parallel()
+	String^ SokobanSolver::DFS_Parallel(int max_depth, const unsigned int history_size)
 	{
 		unsigned int count = 0;
-		STATE dfs_res = m_Instance->dfs_omp(35, 25000, count);
+		STATE dfs_res = m_Instance->dfs_omp(max_depth, history_size, count);
 		std::cout << "nodes count = " << count << "\npath = " << dfs_res.path;
 		return sokobanConversion::char_array_to_string(dfs_res.path.c_str());
+	}
+
+	String^ SokobanSolver::DFS(int max_depth)
+	{
+		return DFS(max_depth, 25000);
+	}
+
+	String^ SokobanSolver::DFS_Parallel(int max_depth)
+	{
+		return DFS_Parallel(max_depth, 25000);
+	}
+
+	String^ SokobanSolver::DFS()
+	{
+		return DFS(UINT_MAX);
+	}
+
+	String^ SokobanSolver::DFS_Parallel()
+	{
+		return DFS_Parallel(UINT_MAX);
 	}
 
 	String^ SokobanSolver::IDS()
