@@ -100,7 +100,7 @@ namespace Sokoban_game
             IDSBtn.Text = "IDS";
             IDSBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7);
             IDSBtn.UseVisualStyleBackColor = true;
-            IDSBtn.Click += new System.EventHandler(IDS_Btn_click);
+            //IDSBtn.Click += new System.EventHandler(IDS_Btn_click);
 
             var IDSParallelBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -213,14 +213,14 @@ namespace Sokoban_game
         private void DFS_Btn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.DFS(90).ToCharArray();
+            char[] path = sokobanSolver.DFS(30).ToCharArray();
             var task = Task.Run(async () => await showPath(path));
         }
 
         private void DFS_Parallel_Btn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.DFS_Parallel(90).ToCharArray();
+            char[] path = sokobanSolver.DFS_Parallel(30).ToCharArray();
             var task = Task.Run(async () => await showPath(path));
         }
 
@@ -234,7 +234,7 @@ namespace Sokoban_game
         private void IDS_Parallel_Btn_click(object sender, EventArgs e)
         {
             SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.IDS().ToCharArray();
+            char[] path = sokobanSolver.IDS_Parallel().ToCharArray();
             var task = Task.Run(async () => await showPath(path));
         }
 
