@@ -30,3 +30,9 @@ storage.ide-wal
 *.db
 *.dll
 *.tlog
+*.pdb
+*.idb
+*.log
+*.lastbuildstate
+*.cache
+*.ipch
