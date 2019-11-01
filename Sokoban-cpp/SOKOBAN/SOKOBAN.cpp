@@ -10,6 +10,7 @@ namespace SOKOBAN {
 	SokobanSolver::SokobanSolver(std::string inputDirectory)
 	{
 	}*/
+
 	SokobanSolver::SokobanSolver(String^ inputDirectory) : SOKOBANWrapper::ManagedObject<sokobanCore::SOKOBAN>(new sokobanCore::SOKOBAN(sokobanConversion::string_to_char_array(inputDirectory)))
 	{
 
@@ -100,6 +101,7 @@ namespace SOKOBAN {
 
 	String^ SokobanSolver::IDS(const unsigned int historySize)
 	{
+
 		std::cout << "Now lest do some IDS...\n";
 		unsigned int count = 0;
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();

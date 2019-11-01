@@ -30,12 +30,28 @@ namespace sokobanCore
 		int num_boxes;
 		std::string path;
 
-		STATE()
+		STATE(): box(new INTPAIR)
 		{
 		};
 		~STATE()
 		{
-			//delete[] box;
+			delete[] box;
+		}
+		STATE(const STATE& other) :
+			player(other.player), num_boxes(other.num_boxes), path(other.path)
+		{
+			this->box = new INTPAIR[this->num_boxes];
+			std::copy(other.box, other.box + other.num_boxes, this->box);
+		}
+		void print()
+		{
+			printf("PLAYER (%d, %d)\t[ ", player.first, player.second);
+			for (int i = 0; i < num_boxes; i++)
+			{
+				std::cout << "B(" << box[i].first << ", " << box[i].second << ") ";
+			}
+			std::cout << "]\t";
+			std::cout << path << '\n';
 		}
 
 		STATE(INTPAIR plyr, int n_boxes, std::string p) :
@@ -63,7 +79,7 @@ namespace sokobanCore
 				}
 			}
 
-			return true;
+			return true && this->path.length() < other.path.length();
 		}
 
 		bool operator!=(const STATE & other)
@@ -77,7 +93,9 @@ namespace sokobanCore
 			this->path = other.path;
 			this->num_boxes = other.num_boxes;
 			this->box = new INTPAIR[other.num_boxes];
-			std::copy(other.box, other.box + other.num_boxes, this->box);
+			//std::copy(other.box, other.box + other.num_boxes, this->box);
+			for (int i = 0; i < this->num_boxes; i++)
+				this->box[i] = other.box[i];
 
 			return *this;
 		}

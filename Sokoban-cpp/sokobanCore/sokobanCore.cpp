@@ -119,6 +119,13 @@ namespace sokobanCore {
 
 	std::vector<STATE>* SOKOBAN::successor(STATE current_state)
 	{
+		/*STATE current_state;
+		current_state.player = current_state2.player;
+		current_state.num_boxes = current_state2.num_boxes;
+		current_state.path = current_state2.path;
+		current_state.box = new INTPAIR[current_state.num_boxes];
+		for (int i = 0; i < current_state.num_boxes; i++)
+			current_state.box[i] = current_state2.box[i];*/
 		std::vector<STATE>* next_states;
 		next_states = new std::vector<STATE>;
 
@@ -154,7 +161,7 @@ namespace sokobanCore {
 						if (j != i)
 						{
 							if ((current_state.box[i].first - 1 == current_state.box[j].first) &&
-								current_state.box[i].second == current_state.box[j].second)
+								(current_state.box[i].second == current_state.box[j].second))
 							{
 								flag = true;
 								break;
@@ -163,22 +170,20 @@ namespace sokobanCore {
 					}
 					if (!flag)
 					{
-						std::cout << "*1\n";
 						STATE temp = current_state;
 						temp.player.first = plyr_x - 1;
 						temp.box[i].first = temp.box[i].first - 1;
+						temp.path += "L";
 						next_states->push_back(temp);
-						std::cout << "&1\n";
 					}
 				}
 			}
 			else
 			{
-				std::cout << "*2\n";
 				STATE temp = current_state;
 				temp.player.first = plyr_x - 1;
+				temp.path += "L";
 				next_states->push_back(temp);
-				std::cout << "&2\n";
 			}
 		}
 
@@ -210,7 +215,7 @@ namespace sokobanCore {
 						if (j != i)
 						{
 							if ((current_state.box[i].first + 1 == current_state.box[j].first) &&
-								current_state.box[i].second == current_state.box[j].second)
+								(current_state.box[i].second == current_state.box[j].second))
 							{
 								flag = true;
 							}
@@ -218,22 +223,20 @@ namespace sokobanCore {
 					}
 					if (!flag)
 					{
-						std::cout << "*3\n";
 						STATE temp = current_state;
 						temp.player.first = plyr_x + 1;
 						temp.box[i].first = temp.box[i].first + 1;
+						temp.path += "R";
 						next_states->push_back(temp);
-						std::cout << "&3\n";
 					}
 				}
 			}
 			else
 			{
-				std::cout << "*4\n";
 				STATE temp = current_state;
 				temp.player.first = plyr_x + 1;
+				temp.path += "R";
 				next_states->push_back(temp);
-				std::cout << "&4\n";
 			}
 		}
 
@@ -265,7 +268,7 @@ namespace sokobanCore {
 						if (j != i)
 						{
 							if ((current_state.box[i].first == current_state.box[j].first) &&
-								current_state.box[i].second - 1 == current_state.box[j].second)
+								(current_state.box[i].second - 1 == current_state.box[j].second))
 							{
 								flag = true;
 								break;
@@ -274,22 +277,21 @@ namespace sokobanCore {
 					}
 					if (!flag)
 					{
-						std::cout << "*5\n";
 						STATE temp = current_state;
 						temp.player.second = plyr_y - 1;
 						temp.box[i].second = temp.box[i].second - 1;
+						temp.path += "U";
 						next_states->push_back(temp);
-						std::cout << "&5\n";
+
 					}
 				}
 			}
 			else
 			{
-				std::cout << "*6\n";
 				STATE temp = current_state;
 				temp.player.second = plyr_y - 1;
+				temp.path += "U";
 				next_states->push_back(temp);
-				std::cout << "&6\n";
 			}
 		}
 
@@ -321,7 +323,7 @@ namespace sokobanCore {
 						if (j != i)
 						{
 							if ((current_state.box[i].first == current_state.box[j].first) &&
-								current_state.box[i].second + 1 == current_state.box[j].second)
+								(current_state.box[i].second + 1 == current_state.box[j].second))
 							{
 								flag = true;
 								break;
@@ -330,22 +332,20 @@ namespace sokobanCore {
 					}
 					if (!flag)
 					{
-						std::cout << "*7\n";
 						STATE temp = current_state;
 						temp.player.second = plyr_y + 1;
 						temp.box[i].second = temp.box[i].second + 1;
+						temp.path += "D";
 						next_states->push_back(temp);
-						std::cout << "&7\n";
 					}
 				}
 			}
 			else
 			{
-				std::cout << "*8\n";
 				STATE temp = current_state;
 				temp.player.second = plyr_y + 1;
+				temp.path += "D";
 				next_states->push_back(temp);
-				std::cout << "&8\n";
 			}
 		}
 
@@ -354,41 +354,30 @@ namespace sokobanCore {
 
 	STATE SOKOBAN::bfs(const unsigned int& history_size, unsigned int& count)
 	{
-		std::cout << history_size << '\n';
 		STATE initial_state = this->initial_state();
-		//std::cout << "test1\n";
 		std::queue<STATE> queue;
 		queue.push(initial_state);
-		//std::cout << "test2\n";
 
 		STATE* visited_states;
 		visited_states = new STATE[history_size];
 		unsigned int i = 0;
 		unsigned int cap = 0;
-		//std::cout << "test3\n";
 
 		STATE state;
-		//std::cout << "test4\n";
 		while (!queue.empty())
 		{
-			std::cout << "test5\n";
 			count++;
 			state = queue.front();
 			visited_states[i++] = state;
-			std::cout << "test6\n";
 			i = i % history_size;
 			cap = std::min(++cap, history_size);
-			std::cout << "test7\n";
 			queue.pop();
-			std::cout << "test1\n";
 			if (is_goal(state))
 			{
 				delete[] visited_states;
 				return state;
 			}
-			std::cout << "test2\n";
 			std::vector<STATE>* successors = successor(state);
-			std::cout << "test3\n";
 			for (auto s = successors->begin(); s != successors->end(); s++)
 			{
 				if (std::find(visited_states, visited_states + cap, *s) == visited_states + cap)
@@ -402,7 +391,7 @@ namespace sokobanCore {
 			}
 			successors->clear();
 			//if (count % 1000 == 0)
-				std::cout << count << '\n';
+			//	std::cout << count << '\n';
 		}
 
 		delete[] visited_states;
@@ -415,17 +404,16 @@ namespace sokobanCore {
 		std::queue<STATE> queue;
 		queue.push(initial_state);
 
-		int indx = 0;
-		int top = 0;
+		unsigned int i = 0;
+		unsigned int cap = 0;
 
-		STATE* history = new STATE[history_size];
+		STATE* visited_states = new STATE[history_size];
 		
 		//int count = 0;
 		while (!queue.empty())
 		{
 			count++;
 			STATE state = queue.front();
-			// cap = std::min(++cap, history_size);
 			queue.pop();
 			if (is_goal(state))
 			{
@@ -448,10 +436,10 @@ namespace sokobanCore {
 					int number_of_threads = omp_get_num_threads();
 					//std::cout << "thread = " << thread_num << "\n";
 					
-					int first = std::floor((float)top * ((float)thread_num / (float)number_of_threads));
-					int last = std::floor((float)top * ((float)(thread_num + 1) / (float)number_of_threads));
+					int first = std::floor((float)cap * ((float)thread_num / (float)number_of_threads));
+					int last = std::floor((float)cap * ((float)(thread_num + 1) / (float)number_of_threads));
 
-					if (std::find(history + first, history + last, *s) != history + last) {
+					if (std::find(visited_states + first, visited_states + last, *s) != visited_states + last) {
 						foundInSearchParallelHistoryGlobalFlag = true;
 					}
 #pragma omp barrier
@@ -464,19 +452,19 @@ namespace sokobanCore {
 					continue;
 				}
 				queue.push(*s);
-				history[indx++] = *s;
-				indx = indx % history_size;
-				top++;
-				if (top > history_size)
-					top = history_size;
+				visited_states[i++] = *s;
+				i = i % history_size;
+				cap = std::min(++cap, history_size);
 
 			}
-			delete successors;
+			successors->clear();
 			//std::cout << count << '\n';
 			if (count % 1000 == 0)
 				std::cout << count << '\n';
 
 		}
+		delete[] visited_states;
+
 		return STATE(std::make_pair(-1, -1), 0, std::string(""));
 	}
 
@@ -610,7 +598,6 @@ namespace sokobanCore {
 				break;
 			}
 		}
-
 		return result;
 	}
 
@@ -629,7 +616,6 @@ namespace sokobanCore {
 				break;
 			}
 		}
-
 		return result;
 	}
 }
