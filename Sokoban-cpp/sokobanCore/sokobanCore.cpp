@@ -203,6 +203,7 @@ namespace sokobanCore {
 
 	STATE SOKOBAN::bfs(const unsigned int& history_size, unsigned int& count)
 	{
+		std::cout << history_size << '\n';
 		STATE initial_state = this->initial_state();
 		std::queue<STATE> queue;
 		queue.push(initial_state);
@@ -217,11 +218,29 @@ namespace sokobanCore {
 		{
 			count++;
 			state = queue.front();
-			//std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\n';
-			//printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
-			visited_states[i++] = state;
-			i = i % history_size;
-			cap = std::min(++cap, history_size);
+			std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\t';
+			printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
+
+			if (count == 108)
+			{
+				std::cout << "^\n";
+				auto var = std::find(visited_states, visited_states + cap, state);
+				if (var == visited_states + cap)
+					std::cout << "not found\n";
+				else
+					std::cout << "found ";
+					std::cout << var - visited_states << '\n';
+			}
+			if (count == 109)
+			{
+				std::cout << "^\n";
+				auto var = std::find(visited_states, visited_states + cap, state);
+				if (var == visited_states + cap)
+					std::cout << "not found\n";
+				else
+					std::cout << "found ";
+				std::cout << var - visited_states << '\n';
+			}
 
 			queue.pop();
 			if (is_goal(state))
@@ -236,6 +255,9 @@ namespace sokobanCore {
 				{
 					// Found an unvisited state
 					queue.push(*s);
+					visited_states[i++] = *s;
+					i = i % history_size;
+					cap = std::min(++cap, history_size);
 				}
 			}
 			successors->clear();
@@ -253,16 +275,8 @@ namespace sokobanCore {
 		std::queue<STATE> queue;
 		queue.push(initial_state);
 
-		// long long int history_size = this->n * this->n * this->m * this->m;
-		// STATE* visited_states;
-		// visited_states = new STATE[history_size];
-		// long long int i = 0;
-		// long long int cap = 0;
 		int indx = 0;
 		int top = 0;
-		//std::vector<STATE> history;
-		//int history_size = 50000;
-		//history.resize(history_size, defaultState);
 
 		STATE* history = new STATE[history_size];
 		
@@ -271,14 +285,6 @@ namespace sokobanCore {
 		{
 			count++;
 			STATE state = queue.front();
-			//history.insert(state);
-			history[indx++] = state;
-			// visited_states[i++] = state;
-			// i = i % history_size;
-			indx = indx % history_size;
-			top++;
-			if (top > history_size)
-				top = history_size;
 			// cap = std::min(++cap, history_size);
 			queue.pop();
 			if (is_goal(state))
@@ -295,8 +301,6 @@ namespace sokobanCore {
 			for (auto s = successors->begin(); s != successors->end(); s++)
 			{
 				bool flag = true;
-				//bool foundInHistoryFlag = false;
-				//STATEParallelOPT succesorS = *s;
 				foundInSearchParallelHistoryGlobalFlag = false;
 #pragma omp parallel
 				{
@@ -304,47 +308,12 @@ namespace sokobanCore {
 					int number_of_threads = omp_get_num_threads();
 					//std::cout << "thread = " << thread_num << "\n";
 					
-					/*auto first = history.begin() + std::floor((float)history.size() * ((float)thread_num / (float)number_of_threads));
-					auto last = history.begin() + std::floor((float)history.size() * ((float)(thread_num + 1) / (float)number_of_threads));*/
-					
 					int first = std::floor((float)top * ((float)thread_num / (float)number_of_threads));
 					int last = std::floor((float)top * ((float)(thread_num + 1) / (float)number_of_threads));
-
-					//std::string h = std::hash<STATE>(*s);
-//#pragma omp barrier
-//					{
-//					std::cout << thread_num << " " << last - first << "\n";
-//					}
-
-					/*if (std::search(first, last, s, s + 1, [](STATE a, STATE b) -> bool {return a == b; }) != last) {
-						foundInHistoryFlag = true;
-					}*/
-
-					/*if (std::find_if(first, last, [s, defaultState, foundInHistoryFlag](STATE a) -> bool {return a == *s || a == defaultState || foundInHistoryFlag; }) != last) {
-						foundInHistoryFlag = true;
-					}*/
-
-					/*if (std::find(first, last, *s) != last) {
-						foundInHistoryFlag = true;
-					}*/
 
 					if (std::find(history + first, history + last, *s) != history + last) {
 						foundInSearchParallelHistoryGlobalFlag = true;
 					}
-
-					/*for (int i = first; i != last; i++) {
-						if (foundInHistoryFlag || (history[i] == defaultState))
-							break;
-						if (history[i] == *s)
-							foundInHistoryFlag = true;
-					}*/
-
-					/*for (auto i = first; i != last; i++) {
-						if (foundInHistoryFlag || *i == defaultState)
-							break;
-						if (*i == *s)
-							foundInHistoryFlag = true;
-					}*/
 #pragma omp barrier
 					{
 					}
@@ -355,6 +324,11 @@ namespace sokobanCore {
 					continue;
 				}
 				queue.push(*s);
+				history[indx++] = *s;
+				indx = indx % history_size;
+				top++;
+				if (top > history_size)
+					top = history_size;
 
 			}
 			delete successors;
@@ -390,9 +364,6 @@ namespace sokobanCore {
 			count++;
 			//std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\t';
 			//printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
-			visited_states[i++] = state;
-			i = i % history_size;
-			cap = std::min(++cap, history_size);
 
 			if (is_goal(state))
 			{
@@ -406,6 +377,9 @@ namespace sokobanCore {
 				{
 					// Found an unvisited state
 					stack.push(*s);
+					visited_states[i++] = state;
+					i = i % history_size;
+					cap = std::min(++cap, history_size);
 				}
 			}
 			successors->clear();
@@ -442,9 +416,6 @@ namespace sokobanCore {
 			count++;
 			//std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\t';
 			//printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
-			visited_states[i++] = state;
-			i = i % history_size;
-			cap = std::min(++cap, history_size);
 
 			if (is_goal(state))
 			{
@@ -459,10 +430,6 @@ namespace sokobanCore {
 				{
 					int thread_num = omp_get_thread_num();
 					int number_of_threads = omp_get_num_threads();
-					//std::cout << "thread = " << thread_num << "\n";
-
-					/*auto first = history.begin() + std::floor((float)history.size() * ((float)thread_num / (float)number_of_threads));
-					auto last = history.begin() + std::floor((float)history.size() * ((float)(thread_num + 1) / (float)number_of_threads));*/
 
 					int first = std::floor((float)cap * ((float)thread_num / (float)number_of_threads));
 					int last = std::floor((float)cap * ((float)(thread_num + 1) / (float)number_of_threads));
@@ -481,6 +448,9 @@ namespace sokobanCore {
 					continue;
 				}
 				stack.push(*s);
+				visited_states[i++] = *s;
+				i = i % history_size;
+				cap = std::min(++cap, history_size);
 			}
 			successors->clear();
 		}

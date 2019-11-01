@@ -40,7 +40,7 @@ namespace sokobanCore
 
 		bool operator==(const STATE& other)
 		{
-			return foundInSearchParallelHistoryGlobalFlag || (this->player == other.player) && (this->box == other.box) && (this->path.length() <= other.path.length());
+			return foundInSearchParallelHistoryGlobalFlag || (this->player == other.player) && (this->box == other.box);// && (this->path.length() <= other.path.length());
 		}
 
 		bool operator!=(const STATE & other)
