@@ -26,3 +26,7 @@ storage.ide-wal
 *.db-wal
 .vs/Sokoban game/v16/Browse.VC.db
 *.ipch
+*.dll
+*.db
+*.dll
+*.tlog
