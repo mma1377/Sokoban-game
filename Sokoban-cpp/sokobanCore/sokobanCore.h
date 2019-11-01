@@ -35,7 +35,7 @@ namespace sokobanCore
 		};
 		~STATE()
 		{
-			delete[] box;
+			//delete[] box;
 		}
 
 		STATE(INTPAIR plyr, int n_boxes, std::string p) :

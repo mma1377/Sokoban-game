@@ -378,7 +378,7 @@ namespace sokobanCore {
 			std::cout << "test6\n";
 			i = i % history_size;
 			cap = std::min(++cap, history_size);
-
+			std::cout << "test7\n";
 			queue.pop();
 			std::cout << "test1\n";
 			if (is_goal(state))
