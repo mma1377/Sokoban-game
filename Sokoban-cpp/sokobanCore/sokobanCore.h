@@ -26,22 +26,44 @@ namespace sokobanCore
 	struct STATE
 	{
 		INTPAIR player;
-		INTPAIR box;
+		INTPAIR* box;
+		int num_boxes;
 		std::string path;
 
 		STATE()
 		{
 		};
+		~STATE()
+		{
+			delete[] box;
+		}
 
-		STATE(INTPAIR plyr, INTPAIR b, std::string p) :
-			player(plyr), box(b), path(p)
+		STATE(INTPAIR plyr, int n_boxes, std::string p) :
+			player(plyr), box(new INTPAIR[n_boxes]), num_boxes(n_boxes), path(p)
 		{
 		}
 
 		bool operator==(const STATE& other)
 		{
+			if (foundInSearchParallelHistoryGlobalFlag)
+			{
+				return true;
+			}
 
-			return foundInSearchParallelHistoryGlobalFlag || (this->player == other.player) && (this->box == other.box);// && (this->path.length() <= other.path.length());
+			if (this->player != other.player)
+			{
+				return false;
+			}
+
+			for (int i = 0; i < num_boxes; i++)
+			{
+				if (this->box[i] != other.box[i])
+				{
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 		bool operator!=(const STATE & other)
@@ -52,8 +74,11 @@ namespace sokobanCore
 		STATE& operator=(const STATE & other)
 		{
 			this->player = other.player;
-			this->box = other.box;
 			this->path = other.path;
+			this->num_boxes = other.num_boxes;
+			this->box = new INTPAIR[other.num_boxes];
+			std::copy(other.box, other.box + other.num_boxes, this->box);
+
 			return *this;
 		}
 	};
@@ -63,11 +88,11 @@ namespace sokobanCore
 		private:
 			short n;
 			short m;
-			short ones;
+			short num_boxes;
 			bool** game_map;
 			INTPAIR player;
-			INTPAIR box;
-			INTPAIR storage;
+			INTPAIR* box;
+			INTPAIR* storage;
 		
 		public:
 			// Constructor function for SOKOBAN class

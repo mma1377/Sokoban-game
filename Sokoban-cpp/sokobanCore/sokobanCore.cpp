@@ -21,8 +21,8 @@ namespace sokobanCore {
 
 		std::cout << n << ' ' << m << '\n';
 		game_map = new bool*[n];
-
-		ones = 0;
+		std::vector<INTPAIR> temp_boxes;
+		std::vector<INTPAIR> temp_storages;
 		for (short row = 0; row < n; row++)
 		{
 			bool *tmp;
@@ -38,28 +38,37 @@ namespace sokobanCore {
 				else if (line[col] == '.')
 				{
 					tmp[col] = 1;
-					ones++;
 				}
 				else if (line[col] == 'S')
 				{
 					tmp[col] = 1;
 					player = std::make_pair(col, row);
-					ones++;
 				}
 				else if (line[col] == '@')
 				{
 					tmp[col] = 1;
-					box = std::make_pair(col, row);
-					ones++;
+					temp_boxes.push_back(std::make_pair(col, row));
 				}
 				else if (line[col] == 'X')
 				{
 					tmp[col] = 1;
-					storage = std::make_pair(col, row);
-					ones++;
+					temp_storages.push_back(std::make_pair(col, row));
 				}
 				game_map[row] = tmp;
 			}
+		}
+		if (temp_boxes.size() != temp_storages.size())
+		{
+			std::cerr << "INVALID INPUT\n";
+			exit(0);
+		}
+		this->num_boxes = temp_boxes.size();
+		box = new INTPAIR[this->num_boxes];
+		storage = new INTPAIR[this->num_boxes];
+		for (int i = 0; i < this->num_boxes; i++)
+		{
+			box[i] = temp_boxes[i];
+			storage[i] = temp_storages[i];
 		}
 	};
 
@@ -67,9 +76,11 @@ namespace sokobanCore {
 	{
 		for (short i = 0; i < n; i++)
 		{
-			delete game_map[i];
+			delete this->game_map[i];
 		}
-		delete game_map;
+		delete this->game_map;
+		delete this->box;
+		delete this->storage;
 	}
 
 	void SOKOBAN::print_map()
@@ -78,7 +89,7 @@ namespace sokobanCore {
 		{
 			for (short j = 0; j < m; j++)
 			{
-				std::cout << game_map[i][j];
+				std::cout << this->game_map[i][j];
 			}
 			std::cout << '\n';
 		}
@@ -86,12 +97,24 @@ namespace sokobanCore {
 
 	STATE SOKOBAN::initial_state()
 	{
-		return STATE(player, box, std::string(""));
+		STATE t(this->player, num_boxes, "");
+		for (int i = 0; i < this->num_boxes; i++)
+		{
+			t.box[i] = this->box[i];
+		}
+		return t;
 	}
 
 	bool SOKOBAN::is_goal(STATE state)
 	{
-		return state.box == this->storage;
+		for (int i = 0; i < this->num_boxes; i++)
+		{
+			if (std::find(storage, storage + this->num_boxes, state.box[i]) == storage + this->num_boxes)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	std::vector<STATE>* SOKOBAN::successor(STATE current_state)
@@ -101,52 +124,116 @@ namespace sokobanCore {
 
 		short plyr_x = current_state.player.first;
 		short plyr_y = current_state.player.second;
-		short box_x = current_state.box.first;
-		short box_y = current_state.box.second;
+		short num_boxes = current_state.num_boxes;
 
-		//Move player one step to the left
+		// Move player one step to the left
 		// Check if the move is valid
 		if (game_map[plyr_y][plyr_x - 1])
 		{
-			// Check if the player is moving into the box
-			if ((box_x == plyr_x - 1) && (box_y == plyr_y))
+			// Check if the player is moving into any box
+			bool hit_box = false;
+			short i;
+			for (i = 0; i < num_boxes; i++)
 			{
-				// Check if the box is movable in this direction
-				if (game_map[box_y][box_x - 1])
+				if ((plyr_x - 1 == current_state.box[i].first) && (plyr_y == current_state.box[i].second))
 				{
-					next_states->push_back(STATE(std::make_pair(plyr_x - 1, plyr_y),
-						std::make_pair(box_x - 1, box_y), current_state.path + 'L'));
+					hit_box = true;
+					break;
+				}
+			}
+			if (hit_box)
+			{
+				// Check whether the box can move too
+				// First, we must check wether there is a wall in its way
+				if (game_map[current_state.box[i].second][current_state.box[i].first - 1])
+				{
+					// Now we must see whether there is another box in this box's way
+					bool flag = false;
+					for (int j = 0; j < num_boxes; j++)
+					{
+						if (j != i)
+						{
+							if ((current_state.box[i].first - 1 == current_state.box[j].first) &&
+								current_state.box[i].second == current_state.box[j].second)
+							{
+								flag = true;
+								break;
+							}
+						}
+					}
+					if (!flag)
+					{
+						std::cout << "*1\n";
+						STATE temp = current_state;
+						temp.player.first = plyr_x - 1;
+						temp.box[i].first = temp.box[i].first - 1;
+						next_states->push_back(temp);
+						std::cout << "&1\n";
+					}
 				}
 			}
 			else
 			{
-				next_states->push_back(STATE(
-					std::make_pair(plyr_x - 1, plyr_y),
-					std::make_pair(box_x, box_y),
-					current_state.path + 'L'));
+				std::cout << "*2\n";
+				STATE temp = current_state;
+				temp.player.first = plyr_x - 1;
+				next_states->push_back(temp);
+				std::cout << "&2\n";
 			}
 		}
 
-		//Move player one step to the right
+		// Move player one step to the right
 		// Check if the move is valid
 		if (game_map[plyr_y][plyr_x + 1])
 		{
-			// Check if the player is moving into the box
-			if ((box_x == plyr_x + 1) && (box_y == plyr_y))
+			// Check if the player is moving into any box
+			bool hit_box = false;
+			short i;
+			for (i = 0; i < num_boxes; i++)
 			{
-				// Check if the box is movable in this direction
-				if (game_map[box_y][box_x + 1])
+				if ((plyr_x + 1 == current_state.box[i].first) && (plyr_y == current_state.box[i].second))
 				{
-					next_states->push_back(STATE(std::make_pair(plyr_x + 1, plyr_y),
-						std::make_pair(box_x + 1, box_y), current_state.path + 'R'));
+					hit_box = true;
+					break;
+				}
+			}
+			if (hit_box)
+			{
+				// Check whether the box can move too
+				// First, we must check wether there is a wall in its way
+				if (game_map[current_state.box[i].second][current_state.box[i].first + 1])
+				{
+					// Now we must see whether there is another box in this box's way
+					bool flag = false;
+					for (int j = 0; j < num_boxes; j++)
+					{
+						if (j != i)
+						{
+							if ((current_state.box[i].first + 1 == current_state.box[j].first) &&
+								current_state.box[i].second == current_state.box[j].second)
+							{
+								flag = true;
+							}
+						}
+					}
+					if (!flag)
+					{
+						std::cout << "*3\n";
+						STATE temp = current_state;
+						temp.player.first = plyr_x + 1;
+						temp.box[i].first = temp.box[i].first + 1;
+						next_states->push_back(temp);
+						std::cout << "&3\n";
+					}
 				}
 			}
 			else
 			{
-				next_states->push_back(STATE(
-					std::make_pair(plyr_x + 1, plyr_y),
-					std::make_pair(box_x, box_y),
-					current_state.path + 'R'));
+				std::cout << "*4\n";
+				STATE temp = current_state;
+				temp.player.first = plyr_x + 1;
+				next_states->push_back(temp);
+				std::cout << "&4\n";
 			}
 		}
 
@@ -154,22 +241,55 @@ namespace sokobanCore {
 		// Check if the move is valid
 		if (game_map[plyr_y - 1][plyr_x])
 		{
-			// Check if the player is moving into the box
-			if ((box_x == plyr_x) && (box_y == plyr_y - 1))
+			// Check if the player is moving into any box
+			bool hit_box = false;
+			short i;
+			for (i = 0; i < num_boxes; i++)
 			{
-				// Check if the box is movable in this direction
-				if (game_map[box_y - 1][box_x])
+				if ((plyr_x == current_state.box[i].first) && (plyr_y - 1 == current_state.box[i].second))
 				{
-					next_states->push_back(STATE(std::make_pair(plyr_x, plyr_y - 1),
-						std::make_pair(box_x, box_y - 1), current_state.path + 'U'));
+					hit_box = true;
+					break;
+				}
+			}
+			if (hit_box)
+			{
+				// Check whether the box can move too
+				// First, we must check wether there is a wall in its way
+				if (game_map[current_state.box[i].second - 1][current_state.box[i].first])
+				{
+					// Now we must see whether there is another box in this box's way
+					bool flag = false;
+					for (int j = 0; j < num_boxes; j++)
+					{
+						if (j != i)
+						{
+							if ((current_state.box[i].first == current_state.box[j].first) &&
+								current_state.box[i].second - 1 == current_state.box[j].second)
+							{
+								flag = true;
+								break;
+							}
+						}
+					}
+					if (!flag)
+					{
+						std::cout << "*5\n";
+						STATE temp = current_state;
+						temp.player.second = plyr_y - 1;
+						temp.box[i].second = temp.box[i].second - 1;
+						next_states->push_back(temp);
+						std::cout << "&5\n";
+					}
 				}
 			}
 			else
 			{
-				next_states->push_back(STATE(
-					std::make_pair(plyr_x, plyr_y - 1),
-					std::make_pair(box_x, box_y),
-					current_state.path + 'U'));
+				std::cout << "*6\n";
+				STATE temp = current_state;
+				temp.player.second = plyr_y - 1;
+				next_states->push_back(temp);
+				std::cout << "&6\n";
 			}
 		}
 
@@ -177,26 +297,57 @@ namespace sokobanCore {
 		// Check if the move is valid
 		if (game_map[plyr_y + 1][plyr_x])
 		{
-			// Check if the player is moving into the box
-			if ((box_x == plyr_x) && (box_y == plyr_y + 1))
+			// Check if the player is moving into any box
+			bool hit_box = false;
+			short i;
+			for (i = 0; i < num_boxes; i++)
 			{
-				// Check if the box is movable in this direction
-				if (game_map[box_y + 1][box_x])
+				if ((plyr_x == current_state.box[i].first) && (plyr_y + 1 == current_state.box[i].second))
 				{
-					next_states->push_back(STATE(std::make_pair(plyr_x, plyr_y + 1),
-						std::make_pair(box_x, box_y + 1), current_state.path + 'D'));
+					hit_box = true;
+					break;
+				}
+			}
+			if (hit_box)
+			{
+				// Check whether the box can move too
+				// First, we must check wether there is a wall in its way
+				if (game_map[current_state.box[i].second + 1][current_state.box[i].first])
+				{
+					// Now we must see whether there is another box in this box's way
+					bool flag = false;
+					for (int j = 0; j < num_boxes; j++)
+					{
+						if (j != i)
+						{
+							if ((current_state.box[i].first == current_state.box[j].first) &&
+								current_state.box[i].second + 1 == current_state.box[j].second)
+							{
+								flag = true;
+								break;
+							}
+						}
+					}
+					if (!flag)
+					{
+						std::cout << "*7\n";
+						STATE temp = current_state;
+						temp.player.second = plyr_y + 1;
+						temp.box[i].second = temp.box[i].second + 1;
+						next_states->push_back(temp);
+						std::cout << "&7\n";
+					}
 				}
 			}
 			else
 			{
-				next_states->push_back(STATE(
-					std::make_pair(plyr_x, plyr_y + 1),
-					std::make_pair(box_x, box_y),
-					current_state.path + 'D'));
+				std::cout << "*8\n";
+				STATE temp = current_state;
+				temp.player.second = plyr_y + 1;
+				next_states->push_back(temp);
+				std::cout << "&8\n";
 			}
 		}
-
-		//std::random_shuffle(next_states->begin(), next_states->end());
 
 		return next_states;
 	}
@@ -205,33 +356,39 @@ namespace sokobanCore {
 	{
 		std::cout << history_size << '\n';
 		STATE initial_state = this->initial_state();
+		//std::cout << "test1\n";
 		std::queue<STATE> queue;
 		queue.push(initial_state);
+		//std::cout << "test2\n";
 
 		STATE* visited_states;
 		visited_states = new STATE[history_size];
 		unsigned int i = 0;
 		unsigned int cap = 0;
+		//std::cout << "test3\n";
 
 		STATE state;
+		//std::cout << "test4\n";
 		while (!queue.empty())
 		{
+			std::cout << "test5\n";
 			count++;
 			state = queue.front();
-
-			std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\n';
-			printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
 			visited_states[i++] = state;
+			std::cout << "test6\n";
 			i = i % history_size;
 			cap = std::min(++cap, history_size);
 
 			queue.pop();
+			std::cout << "test1\n";
 			if (is_goal(state))
 			{
 				delete[] visited_states;
 				return state;
 			}
+			std::cout << "test2\n";
 			std::vector<STATE>* successors = successor(state);
+			std::cout << "test3\n";
 			for (auto s = successors->begin(); s != successors->end(); s++)
 			{
 				if (std::find(visited_states, visited_states + cap, *s) == visited_states + cap)
@@ -244,12 +401,12 @@ namespace sokobanCore {
 				}
 			}
 			successors->clear();
-			if (count % 1000 == 0)
+			//if (count % 1000 == 0)
 				std::cout << count << '\n';
 		}
 
 		delete[] visited_states;
-		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
+		return STATE(std::make_pair(-1, -1), 0, std::string(""));
 	}
 
 	STATE SOKOBAN::bfs_omp(const unsigned int& history_size, unsigned int& count)
@@ -320,7 +477,7 @@ namespace sokobanCore {
 				std::cout << count << '\n';
 
 		}
-		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
+		return STATE(std::make_pair(-1, -1), 0, std::string(""));
 	}
 
 	STATE SOKOBAN::dfs(int max_depth, const unsigned int& history_size, unsigned int& count)
@@ -345,8 +502,6 @@ namespace sokobanCore {
 				continue;
 			}
 			count++;
-			//std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\t';
-			//printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
 
 			if (is_goal(state))
 			{
@@ -369,7 +524,7 @@ namespace sokobanCore {
 		}
 
 		delete[] visited_states;
-		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
+		return STATE(std::make_pair(-1, -1), 0, std::string(""));
 	}
 
 	STATE SOKOBAN::dfs_omp(int max_depth, const unsigned int& history_size, unsigned int& count)
@@ -397,8 +552,6 @@ namespace sokobanCore {
 				continue;
 			}
 			count++;
-			//std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\t';
-			//printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
 
 			if (is_goal(state))
 			{
@@ -439,12 +592,11 @@ namespace sokobanCore {
 		}
 
 		delete[] visited_states;
-		return STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
+		return STATE(std::make_pair(-1, -1), 0, std::string(""));
 	}
 
 	STATE SOKOBAN::ids(const unsigned int& history_size, unsigned int& count)
 	{
-		STATE not_found = STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 		STATE result;
 		for (int depth = 0; depth < 1000; depth++)
 		{
@@ -464,7 +616,6 @@ namespace sokobanCore {
 
 	STATE SOKOBAN::ids_omp(const unsigned int& history_size, unsigned int& count)
 	{
-		STATE not_found = STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 		STATE result;
 		for (int depth = 0; depth < 1000; depth++)
 		{
