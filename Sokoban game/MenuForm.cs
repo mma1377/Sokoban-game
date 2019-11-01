@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Sokoban_game
 {
@@ -28,6 +29,12 @@ namespace Sokoban_game
                 Hide();
                 board.ShowDialog();
             }
+        }
+
+        private void GithubLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ProcessStartInfo sInfo = new ProcessStartInfo("https://github.com/mma1377/Sokoban-game");
+            Process.Start(sInfo);
         }
     }
 }

@@ -8,6 +8,9 @@ using namespace SOKOBANWrapper;
 namespace SOKOBAN {
 	public ref class SokobanSolver : ManagedObject<sokobanCore::SOKOBAN>
 	{
+	private:
+		float lastProcessTimeElapsed;
+		unsigned int lastProcessNodesCount;
 	public:
 		SokobanSolver(String^);
 		String^ BFS(const unsigned int);
@@ -24,5 +27,7 @@ namespace SOKOBAN {
 		String^ IDS();
 		String^ IDS_Parallel(const unsigned int);
 		String^ IDS_Parallel();
+		float LastProcessTimeElapsed();
+		unsigned int LastProcessNodesCount();
 	};
 }

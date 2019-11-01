@@ -33,3 +33,5 @@ Class SOKOBAN.SokobanSolver: AutoLayout, AnsiClass, Class, Public, BeforeFieldIn
     IDS(UInt32 IsConst): PrivateScope, Public, HideBySig
     IDS_Parallel(): PrivateScope, Public, HideBySig
     IDS_Parallel(UInt32 IsConst): PrivateScope, Public, HideBySig
+    LastProcessTimeElapsed(): PrivateScope, Public, HideBySig
+    LastProcessNodesCount(): PrivateScope, Public, HideBySig
