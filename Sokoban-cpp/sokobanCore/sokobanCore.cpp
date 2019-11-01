@@ -217,8 +217,8 @@ namespace sokobanCore {
 		{
 			count++;
 			state = queue.front();
-			//std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\n';
-			//printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
+			std::cout << "CHECKING PATH " << count << ' ' << state.path.length() << ' ' << state.path << '\n';
+			printf("\t\t\tP(%d,% d)\tB(%d, %d)\n", state.player.first, state.player.second, state.box.first, state.box.second);
 			visited_states[i++] = state;
 			i = i % history_size;
 			cap = std::min(++cap, history_size);

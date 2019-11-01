@@ -44,12 +44,12 @@ namespace SOKOBAN {
 
 	String^ SokobanSolver::BFS()
 	{
-		return BFS(12500);
+		return BFS(100000);
 	}
 
 	String^ SokobanSolver::BFS_Parallel()
 	{
-		return BFS_Parallel(12500);
+		return BFS_Parallel(100000);
 	}
 
 	String^ SokobanSolver::DFS(int max_depth, const unsigned int history_size)

@@ -61,7 +61,7 @@
             this.DLSRadio.Size = new System.Drawing.Size(46, 17);
             this.DLSRadio.TabIndex = 3;
             this.DLSRadio.TabStop = true;
-            this.DLSRadio.Text = "LDS";
+            this.DLSRadio.Text = "DLS";
             this.DLSRadio.UseVisualStyleBackColor = true;
             this.DLSRadio.CheckedChanged += new System.EventHandler(this.DLSRadio_CheckedChanged);
             // 
