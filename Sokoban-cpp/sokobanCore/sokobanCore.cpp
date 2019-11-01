@@ -6,6 +6,7 @@
 namespace sokobanCore {
 
 	bool foundInSearchParallelHistoryGlobalFlag = false;
+	bool idsFlag = false;
 
 	SOKOBAN::SOKOBAN(const char* input_file)
 	{
@@ -203,6 +204,7 @@ namespace sokobanCore {
 
 	STATE SOKOBAN::bfs(const unsigned int& history_size, unsigned int& count)
 	{
+		idsFlag = false;
 		std::cout << history_size << '\n';
 		STATE initial_state = this->initial_state();
 		std::queue<STATE> queue;
@@ -254,6 +256,7 @@ namespace sokobanCore {
 
 	STATE SOKOBAN::bfs_omp(const unsigned int& history_size, unsigned int& count)
 	{
+		idsFlag = false;
 		STATE initial_state = this->initial_state();
 		std::queue<STATE> queue;
 		queue.push(initial_state);
@@ -444,6 +447,7 @@ namespace sokobanCore {
 
 	STATE SOKOBAN::ids(const unsigned int& history_size, unsigned int& count)
 	{
+		idsFlag = true;
 		STATE not_found = STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 		STATE result;
 		for (int depth = 0; depth < 1000; depth++)
@@ -458,12 +462,13 @@ namespace sokobanCore {
 				break;
 			}
 		}
-
+		idsFlag = false;
 		return result;
 	}
 
 	STATE SOKOBAN::ids_omp(const unsigned int& history_size, unsigned int& count)
 	{
+		idsFlag = true;
 		STATE not_found = STATE(std::make_pair(-1, -1), std::make_pair(-1, -1), std::string(""));
 		STATE result;
 		for (int depth = 0; depth < 1000; depth++)
@@ -478,7 +483,7 @@ namespace sokobanCore {
 				break;
 			}
 		}
-
+		idsFlag = false;
 		return result;
 	}
 }
