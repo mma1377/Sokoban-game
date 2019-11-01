@@ -241,7 +241,7 @@ namespace Sokoban_game
 
         private void DFS_Parallel_Btn_click(object sender, EventArgs e)
         {
-            DLS_DFS DLS_DFSForm = new DLS_DFS(this, false);
+            DLS_DFS DLS_DFSForm = new DLS_DFS(this, true);
             DLS_DFSForm.ShowDialog();
         }
 

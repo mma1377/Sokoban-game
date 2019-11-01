@@ -44,12 +44,12 @@ namespace SOKOBAN {
 
 	String^ SokobanSolver::BFS()
 	{
-		return BFS(100000);
+		return BFS(200000);
 	}
 
 	String^ SokobanSolver::BFS_Parallel()
 	{
-		return BFS_Parallel(150000);
+		return BFS_Parallel(200000);
 	}
 
 	String^ SokobanSolver::DFS(int max_depth, const unsigned int history_size)
@@ -80,12 +80,12 @@ namespace SOKOBAN {
 
 	String^ SokobanSolver::DFS(int max_depth)
 	{
-		return DFS(max_depth, 12500);
+		return DFS(max_depth, 200000);
 	}
 
 	String^ SokobanSolver::DFS_Parallel(int max_depth)
 	{
-		return DFS_Parallel(max_depth, 40000);
+		return DFS_Parallel(max_depth, 200000);
 	}
 
 	String^ SokobanSolver::DFS()
@@ -126,12 +126,12 @@ namespace SOKOBAN {
 
 	String^ SokobanSolver::IDS()
 	{
-		return IDS(12500);
+		return IDS(200000);
 	}
 
 	String^ SokobanSolver::IDS_Parallel()
 	{
-		return IDS_Parallel(12500);
+		return IDS_Parallel(200000);
 	}
 
 	float SokobanSolver::LastProcessTimeElapsed()
