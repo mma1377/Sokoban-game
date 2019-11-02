@@ -317,7 +317,7 @@ namespace sokobanCore {
 					top = history_size;
 
 			}
-			delete successors;
+			successors->clear();
 			//std::cout << count << '\n';
 			if (count % 1000 == 0)
 				std::cout << count << '\n';
