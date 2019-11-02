@@ -8,8 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using IronPython.Hosting;
-using IronPython;
 using SOKOBAN;
 using System.Threading;
 

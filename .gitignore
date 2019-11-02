@@ -36,3 +36,4 @@ storage.ide-wal
 *.lastbuildstate
 *.cache
 *.ipch
+*.obj
