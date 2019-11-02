@@ -435,8 +435,6 @@ namespace sokobanCore {
 			queue.pop();
 			if (is_goal(state))
 			{
-				//std::cout << "COUNT: " << count << '\n';
-
 				// Deallocate the visited_states array
 				delete[] visited_states;
 				

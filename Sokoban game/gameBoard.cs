@@ -8,8 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using IronPython.Hosting;
-using IronPython;
 using SOKOBAN;
 using System.Threading;
 
@@ -27,7 +25,7 @@ namespace Sokoban_game
         List<Vector2> spotsLocations;
         float scaleFactor;
         string[] problemDataArray;
-        //dynamic SOKOBAN;
+        SokobanSolver sokobanSolver;
 
         public Vector2 GameSize
         {
@@ -217,7 +215,7 @@ namespace Sokoban_game
 
         private void BFS_Btn_click(object sender, EventArgs e)
         {
-            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory);
             char[] path = sokobanSolver.BFS().ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
@@ -226,7 +224,7 @@ namespace Sokoban_game
 
         private void BFS_Parallel_Btn_click(object sender, EventArgs e)
         {
-            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory);
             char[] path = sokobanSolver.BFS_Parallel().ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
@@ -247,7 +245,7 @@ namespace Sokoban_game
 
         private void IDS_Btn_click(object sender, EventArgs e)
         {
-            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory);
             char[] path = sokobanSolver.IDS().ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
@@ -256,7 +254,7 @@ namespace Sokoban_game
 
         private void IDS_Parallel_Btn_click(object sender, EventArgs e)
         {
-            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory);
             char[] path = sokobanSolver.IDS_Parallel().ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
@@ -265,6 +263,11 @@ namespace Sokoban_game
 
         private void Reset_Btn_click(object sender, EventArgs e)
         {
+            if (sokobanSolver != null)
+            {
+                sokobanSolver = null;
+                GC.Collect();
+            }
             boxesLocations.Clear();
             spotsLocations.Clear();
             for (int i = 0; i < GameSize.y; i++)
@@ -296,7 +299,7 @@ namespace Sokoban_game
 
         public void dfs()
         {
-            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory);
             char[] path = sokobanSolver.DFS().ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
@@ -305,7 +308,7 @@ namespace Sokoban_game
 
         public void dls(int depth)
         {
-            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory);
             char[] path = sokobanSolver.DFS(depth).ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
@@ -314,7 +317,7 @@ namespace Sokoban_game
 
         public void dfs_parallel()
         {
-            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory);
             char[] path = sokobanSolver.DFS_Parallel().ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
@@ -323,7 +326,7 @@ namespace Sokoban_game
 
         public void dls_parallel(int depth)
         {
-            SokobanSolver sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory);
             char[] path = sokobanSolver.DFS_Parallel(depth).ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
