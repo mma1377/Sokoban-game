@@ -377,6 +377,7 @@ namespace sokobanCore {
 			{
 				// Deallocate the visited_states array
 				delete[] visited_states;
+				
 				return state;
 			}
 			std::vector<STATE>* successors = successor(state);
@@ -438,6 +439,7 @@ namespace sokobanCore {
 
 				// Deallocate the visited_states array
 				delete[] visited_states;
+				
 				return state;
 			}
 
@@ -500,6 +502,7 @@ namespace sokobanCore {
 				std::cout << count << '\n';*/
 
 		}
+		
 		// Deallocate the visited_states array
 		delete[] visited_states;
 
@@ -542,6 +545,7 @@ namespace sokobanCore {
 			{
 				// Deallocate the visited_states array
 				delete[] visited_states;
+				
 				return state;
 			}
 
@@ -611,6 +615,7 @@ namespace sokobanCore {
 			{
 				// Deallocate the visited_states array
 				delete[] visited_states;
+				
 				return state;
 			}
 			
