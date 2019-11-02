@@ -77,6 +77,16 @@ namespace SOKOBAN {
 		return DFS(max_depth, 200000);
 	}
 
+	String^ SokobanSolver::DFS(const unsigned int history_size)
+	{
+		return DFS(UINT_MAX, history_size);
+	}
+
+	String^ SokobanSolver::DFS_Parallel(const unsigned int history_size)
+	{
+		return DFS_Parallel(UINT_MAX, history_size);
+	}
+
 	String^ SokobanSolver::DFS_Parallel(int max_depth)
 	{
 		return DFS_Parallel(max_depth, 200000);

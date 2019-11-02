@@ -26,6 +26,7 @@ namespace Sokoban_game
         float scaleFactor;
         string[] problemDataArray;
         SokobanSolver sokobanSolver;
+        TextBox historySizeTextBox;
 
         public Vector2 GameSize
         {
@@ -48,8 +49,9 @@ namespace Sokoban_game
             string input = System.IO.File.ReadAllText(inputFileDirectory);
             parse_problem_data_str_into_board(input);
 
-            var BFSBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
+
+            var BFSBtn = new System.Windows.Forms.Button();
             BFSBtn.Location = new System.Drawing.Point(2, (int)(32 * GameSize.y * scaleFactor) + 8);
             BFSBtn.Name = "BFS";
             BFSBtn.Size = new System.Drawing.Size(74, 24);
@@ -60,7 +62,6 @@ namespace Sokoban_game
             BFSBtn.Click += new System.EventHandler(BFS_Btn_click);
 
             var BFSParallelBtn = new System.Windows.Forms.Button();
-            this.SuspendLayout();
             BFSParallelBtn.Location = new System.Drawing.Point(78, (int)(32 * GameSize.y * scaleFactor) + 8);
             BFSParallelBtn.Name = "BFSParallel";
             BFSParallelBtn.Size = new System.Drawing.Size(74, 24);
@@ -71,7 +72,6 @@ namespace Sokoban_game
             BFSParallelBtn.Click += new System.EventHandler(BFS_Parallel_Btn_click);
 
             var DFSBtn = new System.Windows.Forms.Button();
-            this.SuspendLayout();
             DFSBtn.Location = new System.Drawing.Point(154, (int)(32 * GameSize.y * scaleFactor) + 8);
             DFSBtn.Name = "DFS";
             DFSBtn.Size = new System.Drawing.Size(74, 24);
@@ -82,7 +82,6 @@ namespace Sokoban_game
             DFSBtn.Click += new System.EventHandler(DFS_Btn_click);
 
             var DFSParallelBtn = new System.Windows.Forms.Button();
-            this.SuspendLayout();
             DFSParallelBtn.Location = new System.Drawing.Point(230, (int)(32 * GameSize.y * scaleFactor) + 8);
             DFSParallelBtn.Name = "DFSParallel";
             DFSParallelBtn.Size = new System.Drawing.Size(74, 24);
@@ -93,7 +92,6 @@ namespace Sokoban_game
             DFSParallelBtn.Click += new System.EventHandler(DFS_Parallel_Btn_click);
 
             var IDSBtn = new System.Windows.Forms.Button();
-            this.SuspendLayout();
             IDSBtn.Location = new System.Drawing.Point(306, (int)(32 * GameSize.y * scaleFactor) + 8);
             IDSBtn.Name = "IDS";
             IDSBtn.Size = new System.Drawing.Size(74, 24);
@@ -104,7 +102,6 @@ namespace Sokoban_game
             IDSBtn.Click += new System.EventHandler(IDS_Btn_click);
 
             var IDSParallelBtn = new System.Windows.Forms.Button();
-            this.SuspendLayout();
             IDSParallelBtn.Location = new System.Drawing.Point(382, (int)(32 * GameSize.y * scaleFactor) + 8);
             IDSParallelBtn.Name = "IDS";
             IDSParallelBtn.Size = new System.Drawing.Size(74, 24);
@@ -115,7 +112,6 @@ namespace Sokoban_game
             IDSParallelBtn.Click += new System.EventHandler(IDS_Parallel_Btn_click);
 
             var ResetBtn = new System.Windows.Forms.Button();
-            this.SuspendLayout();
             ResetBtn.Location = new System.Drawing.Point(458, (int)(32 * GameSize.y * scaleFactor) + 8);
             ResetBtn.Name = "Reset";
             ResetBtn.Size = new System.Drawing.Size(74, 24);
@@ -124,6 +120,22 @@ namespace Sokoban_game
             ResetBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7);
             ResetBtn.UseVisualStyleBackColor = true;
             ResetBtn.Click += new System.EventHandler(Reset_Btn_click);
+
+            var historySizeLabel = new System.Windows.Forms.Label();
+            historySizeLabel.Location = new System.Drawing.Point(4, (int)(32 * GameSize.y * scaleFactor) + 44);
+            historySizeLabel.Name = "historySizeLabel";
+            historySizeLabel.Size = new System.Drawing.Size(74, 24);
+            historySizeLabel.TabIndex = 0;
+            historySizeLabel.Text = "History size";
+            historySizeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7);
+
+            historySizeTextBox = new System.Windows.Forms.TextBox();
+            historySizeTextBox.Location = new System.Drawing.Point(80, (int)(32 * GameSize.y * scaleFactor) + 42);
+            historySizeTextBox.Name = "historySizeTextBoxs";
+            historySizeTextBox.Size = new System.Drawing.Size(74, 24);
+            historySizeTextBox.TabIndex = 0;
+            historySizeTextBox.Text = "20000";
+            historySizeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7);
 
             elapsedTimeLabel.Location = new System.Drawing.Point(534, (int)(32 * GameSize.y * scaleFactor) + 8);
             visitedNodesLabel.Location = new System.Drawing.Point(534, (int)(32 * GameSize.y * scaleFactor) + 20);
@@ -136,7 +148,8 @@ namespace Sokoban_game
             this.Controls.Add(IDSBtn);
             this.Controls.Add(IDSParallelBtn);
             this.Controls.Add(ResetBtn);
-            //this.ScaleControl(new SizeF(1.5f, 1.5f), BoundsSpecified.All);
+            this.Controls.Add(historySizeLabel);
+            this.Controls.Add(historySizeTextBox);
         }
 
         private bool isBox(Vector2 position, ref int index)
@@ -216,7 +229,13 @@ namespace Sokoban_game
         private void BFS_Btn_click(object sender, EventArgs e)
         {
             sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.BFS().ToCharArray();
+            uint historySize;
+            if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
+            {
+                historySize = 1;
+                historySizeTextBox.Text = "1";
+            }
+            char[] path = sokobanSolver.BFS(historySize).ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
             var task = Task.Run(async () => await showPath(path));
@@ -225,7 +244,13 @@ namespace Sokoban_game
         private void BFS_Parallel_Btn_click(object sender, EventArgs e)
         {
             sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.BFS_Parallel().ToCharArray();
+            uint historySize;
+            if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
+            {
+                historySize = 1;
+                historySizeTextBox.Text = "1";
+            }
+            char[] path = sokobanSolver.BFS_Parallel(historySize).ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
             var task = Task.Run(async () => await showPath(path));
@@ -246,7 +271,13 @@ namespace Sokoban_game
         private void IDS_Btn_click(object sender, EventArgs e)
         {
             sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.IDS().ToCharArray();
+            uint historySize;
+            if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
+            {
+                historySize = 1;
+                historySizeTextBox.Text = "1";
+            }
+            char[] path = sokobanSolver.IDS(historySize).ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
             var task = Task.Run(async () => await showPath(path));
@@ -255,7 +286,13 @@ namespace Sokoban_game
         private void IDS_Parallel_Btn_click(object sender, EventArgs e)
         {
             sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.IDS_Parallel().ToCharArray();
+            uint historySize;
+            if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
+            {
+                historySize = 1;
+                historySizeTextBox.Text = "1";
+            }
+            char[] path = sokobanSolver.IDS_Parallel(historySize).ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
             var task = Task.Run(async () => await showPath(path));
@@ -300,7 +337,13 @@ namespace Sokoban_game
         public void dfs()
         {
             sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.DFS().ToCharArray();
+            uint historySize;
+            if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
+            {
+                historySize = 1;
+                historySizeTextBox.Text = "1";
+            }
+            char[] path = sokobanSolver.DFS(historySize).ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
             var task = Task.Run(async () => await showPath(path));
@@ -309,7 +352,13 @@ namespace Sokoban_game
         public void dls(int depth)
         {
             sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.DFS(depth).ToCharArray();
+            uint historySize;
+            if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
+            {
+                historySize = 1;
+                historySizeTextBox.Text = "1";
+            }
+            char[] path = sokobanSolver.DFS(depth, historySize).ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
             var task = Task.Run(async () => await showPath(path));
@@ -318,7 +367,13 @@ namespace Sokoban_game
         public void dfs_parallel()
         {
             sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.DFS_Parallel().ToCharArray();
+            uint historySize;
+            if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
+            {
+                historySize = 1;
+                historySizeTextBox.Text = "1";
+            }
+            char[] path = sokobanSolver.DFS_Parallel(historySize).ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
             var task = Task.Run(async () => await showPath(path));
@@ -327,7 +382,13 @@ namespace Sokoban_game
         public void dls_parallel(int depth)
         {
             sokobanSolver = new SokobanSolver(inputFileDirectory);
-            char[] path = sokobanSolver.DFS_Parallel(depth).ToCharArray();
+            uint historySize;
+            if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
+            {
+                historySize = 1;
+                historySizeTextBox.Text = "1";
+            }
+            char[] path = sokobanSolver.DFS_Parallel(depth, historySize).ToCharArray();
             elapsedTimeLabel.Text = "Elapsed time = " + sokobanSolver.LastProcessTimeElapsed() + "s";
             visitedNodesLabel.Text = "Visited nodes = " + sokobanSolver.LastProcessNodesCount();
             var task = Task.Run(async () => await showPath(path));
@@ -377,7 +438,7 @@ namespace Sokoban_game
                 offsetX = (650 % width) / 2;
                 width = 650;
             }
-            height += 40;
+            height += 70;
             allocate_sprites(offsetX);
             boxesLocations = new List<Vector2>();
             spotsLocations = new List<Vector2>();

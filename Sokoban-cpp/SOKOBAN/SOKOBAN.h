@@ -19,9 +19,11 @@ namespace SOKOBAN {
 		String^ BFS();
 		String^ DFS(int, const unsigned int);
 		String^ DFS(int);
+		String^ DFS(const unsigned int);
 		String^ DFS();
 		String^ DFS_Parallel(int, const unsigned int);
 		String^ DFS_Parallel(int);
+		String^ DFS_Parallel(const unsigned int);
 		String^ DFS_Parallel();
 		String^ IDS(const unsigned int);
 		String^ IDS();
