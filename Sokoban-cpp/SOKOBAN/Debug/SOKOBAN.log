@@ -1,4 +1,0 @@
-﻿  SOKOBAN.cpp
-  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-sokobanCore.lib(sokobanCore.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
-  SOKOBAN.vcxproj -> C:\Users\InVaderrr\Documents\repos\Sokoban-game\Debug\SOKOBAN.dll
