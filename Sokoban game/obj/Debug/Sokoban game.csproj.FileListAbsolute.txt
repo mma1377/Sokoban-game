@@ -41,3 +41,5 @@ C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban g
 C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.pdb
 D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban game\obj\Debug\Sokoban_game.DLS_DFS.resources
 C:\Users\InVaderrr\Documents\repos\Sokoban-game\Sokoban game\obj\Debug\Sokoban_game.DLS_DFS.resources
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban game\bin\Debug\Sokoban game.pdb
+D:\EducationProjects\7-Autumn 98\SokobanGame\Sokoban-game\Sokoban game\obj\Debug\Sokoban game.pdb

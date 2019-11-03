@@ -18,9 +18,15 @@
     <ClInclude Include="sokobanCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sokobanCoreSingleBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sokobanCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sokobanCoreSingleBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

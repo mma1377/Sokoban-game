@@ -1,7 +1,9 @@
 sokoban-python/Soko4.txt
 .vscode/c_cpp_properties.json
 .vscode/settings.json
-/.vs/
+.vs/
+.vs/Sokoban game/
+.vs/Sokoban game/v16
 Browse.VC.db
 storage.ide-wal
 *.tlog
@@ -9,6 +11,7 @@ storage.ide-wal
 *.cache
 *.sarif
 *.pch
+*.lock
 *.lastcodeanalysissucceeded
 *.codeanalysis
 *.pch.codeanalysisast
@@ -24,7 +27,6 @@ storage.ide-wal
 *.ide.wal
 *.db-shm
 *.db-wal
-.vs/Sokoban game/v16/Browse.VC.db
 *.ipch
 *.dll
 *.db
@@ -35,5 +37,4 @@ storage.ide-wal
 *.log
 *.lastbuildstate
 *.cache
-*.ipch
 *.obj

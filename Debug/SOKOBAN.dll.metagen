@@ -1,5 +1,5 @@
 ImageRuntimeVersion: v4.0.30319
-Assembly SOKOBAN, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+Assembly SOKOBAN, Version=0.0.*, Culture=Invariant Language (Invariant Country): 
 	hash=SHA1, flags=PublicKey
 Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
@@ -9,6 +9,12 @@ Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e0
 	hash=None, flags=None
 Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
+Class SOKOBANWrapper.ManagedObject<sokobanCoreSingleBox::SOKOBAN>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(sokobanCoreSingleBox.SOKOBAN*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
 Class SOKOBANWrapper.ManagedObject<sokobanCore::SOKOBAN>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(sokobanCore.SOKOBAN*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Interfaces:
@@ -17,6 +23,7 @@ Class SOKOBANWrapper.ManagedObject<sokobanCore::SOKOBAN>: AutoLayout, AnsiClass,
     Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
 Class SOKOBAN.SokobanSolver: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :SOKOBANWrapper.ManagedObject<sokobanCore::SOKOBAN>
+    Void .ctor(System.String, Boolean): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
     Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
     BFS(): PrivateScope, Public, HideBySig
@@ -24,9 +31,11 @@ Class SOKOBAN.SokobanSolver: AutoLayout, AnsiClass, Class, Public, BeforeFieldIn
     BFS_Parallel(): PrivateScope, Public, HideBySig
     BFS_Parallel(UInt32 IsConst): PrivateScope, Public, HideBySig
     DFS(): PrivateScope, Public, HideBySig
+    DFS(UInt32 IsConst): PrivateScope, Public, HideBySig
     DFS(Int32): PrivateScope, Public, HideBySig
     DFS(Int32, UInt32 IsConst): PrivateScope, Public, HideBySig
     DFS_Parallel(): PrivateScope, Public, HideBySig
+    DFS_Parallel(UInt32 IsConst): PrivateScope, Public, HideBySig
     DFS_Parallel(Int32): PrivateScope, Public, HideBySig
     DFS_Parallel(Int32, UInt32 IsConst): PrivateScope, Public, HideBySig
     IDS(): PrivateScope, Public, HideBySig
