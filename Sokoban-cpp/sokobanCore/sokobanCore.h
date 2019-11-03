@@ -117,9 +117,9 @@ namespace sokobanCore
 				}
 			}
 
-			// The second term is to ensure IDS search returns the optimal
-			// result. IDSSearchGlobalFlag is always true when using other
-			// searches.
+			// The IDSSearchGlobalFlag is to ensure IDS search returns the 
+			// optimal result. IDSSearchGlobalFlag is always true when using
+			// other searches.
 			return true && (IDSSearchGlobalFlag || this->path.length() <= other.path.length());
 		}
 
