@@ -90,11 +90,10 @@ namespace sokobanCoreSingleBox
 			// process. Without this flag, the thread that first found a match
 			// would have to wait for the other threads to end their search.
 			
-			// The first term is to ensure IDS search returns the optimal
-			// result. IDSSearchGlobalFlag is always true when using other
-			// searches.
-
-			return foundInSearchParallelHistoryGlobalFlag || (this->player == other.player) && (this->box == other.box) && (!IDSSearchGlobalFlag || (this->path.length() <= other.path.length()));
+			// The IDSSearchGlobalFlag is to ensure IDS search returns the 
+			// optimal result. IDSSearchGlobalFlag is always true when using
+			// other searches.
+			return foundInSearchParallelHistoryGlobalFlag || (this->player == other.player) && (this->box == other.box) && (IDSSearchGlobalFlag || (this->path.length() <= other.path.length()));
 		}
 
 		// != operator overload for STATE
