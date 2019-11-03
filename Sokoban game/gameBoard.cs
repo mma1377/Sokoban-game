@@ -27,6 +27,7 @@ namespace Sokoban_game
         string[] problemDataArray;
         SokobanSolver sokobanSolver;
         TextBox historySizeTextBox;
+        bool isSingleBox;
 
         public Vector2 GameSize
         {
@@ -228,7 +229,7 @@ namespace Sokoban_game
 
         private void BFS_Btn_click(object sender, EventArgs e)
         {
-            sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory, isSingleBox);
             uint historySize;
             if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
             {
@@ -243,7 +244,7 @@ namespace Sokoban_game
 
         private void BFS_Parallel_Btn_click(object sender, EventArgs e)
         {
-            sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory, isSingleBox);
             uint historySize;
             if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
             {
@@ -270,7 +271,7 @@ namespace Sokoban_game
 
         private void IDS_Btn_click(object sender, EventArgs e)
         {
-            sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory, isSingleBox);
             uint historySize;
             if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
             {
@@ -285,7 +286,7 @@ namespace Sokoban_game
 
         private void IDS_Parallel_Btn_click(object sender, EventArgs e)
         {
-            sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory, isSingleBox);
             uint historySize;
             if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
             {
@@ -336,7 +337,7 @@ namespace Sokoban_game
 
         public void dfs()
         {
-            sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory, isSingleBox);
             uint historySize;
             if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
             {
@@ -351,7 +352,7 @@ namespace Sokoban_game
 
         public void dls(int depth)
         {
-            sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory, isSingleBox);
             uint historySize;
             if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
             {
@@ -366,7 +367,7 @@ namespace Sokoban_game
 
         public void dfs_parallel()
         {
-            sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory, isSingleBox);
             uint historySize;
             if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
             {
@@ -381,7 +382,7 @@ namespace Sokoban_game
 
         public void dls_parallel(int depth)
         {
-            sokobanSolver = new SokobanSolver(inputFileDirectory);
+            sokobanSolver = new SokobanSolver(inputFileDirectory, isSingleBox);
             uint historySize;
             if (!uint.TryParse(historySizeTextBox.Text, out historySize) || historySize < 1)
             {
@@ -442,6 +443,7 @@ namespace Sokoban_game
             allocate_sprites(offsetX);
             boxesLocations = new List<Vector2>();
             spotsLocations = new List<Vector2>();
+            isSingleBox = true;
             for (int i = 0; i < GameSize.y; i++)
             {
                 for(int j = 0; j < GameSize.x; j++)
@@ -467,6 +469,8 @@ namespace Sokoban_game
                     }
                 }
             }
+            if (boxesLocations.Count > 1)
+                isSingleBox = false;
             ClientSize = new System.Drawing.Size(width, height);
             ResumeLayout();
         }

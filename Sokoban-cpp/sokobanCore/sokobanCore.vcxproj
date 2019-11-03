@@ -132,9 +132,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="sokobanCore.h" />
+    <ClInclude Include="sokobanCoreSingleBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sokobanCore.cpp" />
+    <ClCompile Include="sokobanCoreSingleBox.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
